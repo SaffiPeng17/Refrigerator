@@ -28,16 +28,16 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Refrigerator" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="GJd-Yh-RWb">
-                                <rect key="frame" x="84.5" y="100" width="206" height="43"/>
+                                <rect key="frame" x="84.5" y="120" width="206" height="43"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch" translatesAutoresizingMaskIntoConstraints="NO" id="DPF-rq-E8e">
-                                <rect key="frame" x="67" y="213" width="240" height="296"/>
+                                <rect key="frame" x="93" y="233" width="189" height="234"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="296" id="e1h-Qd-q8c"/>
-                                    <constraint firstAttribute="width" constant="240" id="h6u-8o-10U"/>
+                                    <constraint firstAttribute="height" constant="234" id="e1h-Qd-q8c"/>
+                                    <constraint firstAttribute="width" constant="189" id="h6u-8o-10U"/>
                                 </constraints>
                             </imageView>
                         </subviews>
@@ -46,7 +46,7 @@
                             <constraint firstItem="GJd-Yh-RWb" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="2UC-Am-UYS"/>
                             <constraint firstItem="obG-Y5-kRd" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Dw0-1t-Ndq"/>
                             <constraint firstItem="DPF-rq-E8e" firstAttribute="top" secondItem="GJd-Yh-RWb" secondAttribute="bottom" constant="70" id="hBd-SP-tKZ"/>
-                            <constraint firstItem="GJd-Yh-RWb" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" constant="100" id="qTV-d3-VI3"/>
+                            <constraint firstItem="GJd-Yh-RWb" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" constant="120" id="qTV-d3-VI3"/>
                             <constraint firstAttribute="bottom" secondItem="obG-Y5-kRd" secondAttribute="bottom" constant="20" id="sRA-pU-SkC"/>
                             <constraint firstItem="DPF-rq-E8e" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="yvM-19-JnM"/>
                         </constraints>

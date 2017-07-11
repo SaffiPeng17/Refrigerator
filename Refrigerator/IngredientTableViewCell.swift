@@ -20,6 +20,11 @@ class IngredientTableViewCell: UITableViewCell {
     @IBOutlet weak var nQuantity: UILabel!
     @IBOutlet weak var nPeriod: UILabel!
     
+    @IBOutlet weak var fImage: UIImageView!
+    @IBOutlet weak var fName: UILabel!
+    @IBOutlet weak var fQuantity: UILabel!
+    @IBOutlet weak var fPeriod: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

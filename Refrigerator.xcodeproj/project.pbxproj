@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04C9F3001F15204800E92CC0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C9F2FF1F15204800E92CC0 /* ViewController.swift */; };
 		04D6EC3B1F13D7FD003102DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D6EC3A1F13D7FD003102DA /* AppDelegate.swift */; };
 		04D6EC401F13D7FD003102DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04D6EC3E1F13D7FD003102DA /* Main.storyboard */; };
 		04D6EC421F13D7FD003102DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04D6EC411F13D7FD003102DA /* Assets.xcassets */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04C9F2FF1F15204800E92CC0 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		04D6EC371F13D7FD003102DA /* Refrigerator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Refrigerator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04D6EC3A1F13D7FD003102DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04D6EC3F1F13D7FD003102DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 			children = (
 				04D6EC3A1F13D7FD003102DA /* AppDelegate.swift */,
 				04D6EC4E1F13DAB2003102DA /* IngredientTableViewController.swift */,
+				04C9F2FF1F15204800E92CC0 /* ViewController.swift */,
 				04D6EC3E1F13D7FD003102DA /* Main.storyboard */,
 				04D6EC411F13D7FD003102DA /* Assets.xcassets */,
 				04D6EC501F13E2DB003102DA /* LaunchScreen.storyboard */,
@@ -142,6 +145,7 @@
 			files = (
 				04D6EC3B1F13D7FD003102DA /* AppDelegate.swift in Sources */,
 				04D6EC4F1F13DAB2003102DA /* IngredientTableViewController.swift in Sources */,
+				04C9F3001F15204800E92CC0 /* ViewController.swift in Sources */,
 				04D6EC531F140535003102DA /* IngredientTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -298,6 +302,7 @@
 				04D6EC4B1F13D7FD003102DA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

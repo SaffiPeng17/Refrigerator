@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0433CCFB1F2A580B0024237D /* Foods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0433CCFA1F2A580B0024237D /* Foods.swift */; };
 		04C9F3001F15204800E92CC0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C9F2FF1F15204800E92CC0 /* ViewController.swift */; };
+		04C9F3041F1E132200E92CC0 /* FoodDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C9F3031F1E132200E92CC0 /* FoodDetailViewController.swift */; };
+		04C9F3061F1E4D9500E92CC0 /* FoodDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C9F3051F1E4D9500E92CC0 /* FoodDetailTableViewCell.swift */; };
 		04D6EC3B1F13D7FD003102DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D6EC3A1F13D7FD003102DA /* AppDelegate.swift */; };
 		04D6EC401F13D7FD003102DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04D6EC3E1F13D7FD003102DA /* Main.storyboard */; };
 		04D6EC421F13D7FD003102DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04D6EC411F13D7FD003102DA /* Assets.xcassets */; };
@@ -17,7 +20,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0433CCFA1F2A580B0024237D /* Foods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Foods.swift; sourceTree = "<group>"; };
 		04C9F2FF1F15204800E92CC0 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		04C9F3031F1E132200E92CC0 /* FoodDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodDetailViewController.swift; sourceTree = "<group>"; };
+		04C9F3051F1E4D9500E92CC0 /* FoodDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodDetailTableViewCell.swift; sourceTree = "<group>"; };
 		04D6EC371F13D7FD003102DA /* Refrigerator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Refrigerator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04D6EC3A1F13D7FD003102DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04D6EC3F1F13D7FD003102DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -59,13 +65,16 @@
 			isa = PBXGroup;
 			children = (
 				04D6EC3A1F13D7FD003102DA /* AppDelegate.swift */,
-				04D6EC4E1F13DAB2003102DA /* IngredientTableViewController.swift */,
-				04C9F2FF1F15204800E92CC0 /* ViewController.swift */,
-				04D6EC3E1F13D7FD003102DA /* Main.storyboard */,
 				04D6EC411F13D7FD003102DA /* Assets.xcassets */,
-				04D6EC501F13E2DB003102DA /* LaunchScreen.storyboard */,
+				04C9F3051F1E4D9500E92CC0 /* FoodDetailTableViewCell.swift */,
+				04C9F3031F1E132200E92CC0 /* FoodDetailViewController.swift */,
+				0433CCFA1F2A580B0024237D /* Foods.swift */,
 				04D6EC461F13D7FD003102DA /* Info.plist */,
 				04D6EC521F140535003102DA /* IngredientTableViewCell.swift */,
+				04D6EC4E1F13DAB2003102DA /* IngredientTableViewController.swift */,
+				04D6EC501F13E2DB003102DA /* LaunchScreen.storyboard */,
+				04D6EC3E1F13D7FD003102DA /* Main.storyboard */,
+				04C9F2FF1F15204800E92CC0 /* ViewController.swift */,
 			);
 			path = Refrigerator;
 			sourceTree = "<group>";
@@ -143,9 +152,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04C9F3061F1E4D9500E92CC0 /* FoodDetailTableViewCell.swift in Sources */,
 				04D6EC3B1F13D7FD003102DA /* AppDelegate.swift in Sources */,
 				04D6EC4F1F13DAB2003102DA /* IngredientTableViewController.swift in Sources */,
+				0433CCFB1F2A580B0024237D /* Foods.swift in Sources */,
 				04C9F3001F15204800E92CC0 /* ViewController.swift in Sources */,
+				04C9F3041F1E132200E92CC0 /* FoodDetailViewController.swift in Sources */,
 				04D6EC531F140535003102DA /* IngredientTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

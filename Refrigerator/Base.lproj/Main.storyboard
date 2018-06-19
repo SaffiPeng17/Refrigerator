@@ -166,10 +166,8 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9vP-re-i4B">
                                 <rect key="frame" x="0.0" y="419" width="375" height="248"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="separatorColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <inset key="separatorInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
-                                <view key="tableFooterView" contentMode="scaleToFill" id="sYO-cs-bjM">
-                                    <rect key="frame" x="0.0" y="178" width="375" height="44"/>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="cuK-fE-ikK">
+                                    <rect key="frame" x="0.0" y="78" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
@@ -209,8 +207,8 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="content" destination="mtH-Y5-pjX" id="leh-1t-MoM"/>
-                                            <outlet property="title" destination="JLb-86-u8o" id="9iW-vZ-Ucs"/>
+                                            <outlet property="content" destination="mtH-Y5-pjX" id="XTx-0k-yad"/>
+                                            <outlet property="title" destination="JLb-86-u8o" id="MEJ-Yb-qZK"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="datepickercell" rowHeight="50" id="buP-eq-ANg" customClass="DateTableViewCell" customModule="Refrigerator" customModuleProvider="target">
@@ -297,28 +295,28 @@
                                     <outlet property="delegate" destination="aie-zJ-FpJ" id="4jU-Vp-rmF"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DNO-E3-HcN" userLabel="closeButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kNc-8g-OO1" userLabel="editButton">
                                 <rect key="frame" x="325" y="617" width="35" height="35"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="35" id="GeE-oc-xM4"/>
-                                    <constraint firstAttribute="height" constant="35" id="lCn-RE-V1u"/>
-                                </constraints>
-                                <state key="normal" image="close_normal"/>
-                                <state key="highlighted" image="close_pressed"/>
-                                <connections>
-                                    <action selector="closeButtonClicked:" destination="aie-zJ-FpJ" eventType="touchDown" id="Cbu-sT-8xP"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hlv-vh-XsF" userLabel="editButton">
-                                <rect key="frame" x="325" y="617" width="35" height="35"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="35" id="S8P-cb-IIH"/>
-                                    <constraint firstAttribute="height" constant="35" id="STN-eS-Pt6"/>
+                                    <constraint firstAttribute="width" constant="35" id="Unx-pP-Qr7"/>
+                                    <constraint firstAttribute="height" constant="35" id="mnd-15-ecY"/>
                                 </constraints>
                                 <state key="normal" image="edit_normal"/>
                                 <state key="highlighted" image="edit_pressed"/>
                                 <connections>
-                                    <action selector="editButtonClicked:" destination="aie-zJ-FpJ" eventType="touchDown" id="E4w-Sm-RzI"/>
+                                    <action selector="editButtonClicked:" destination="aie-zJ-FpJ" eventType="touchDown" id="ccS-FK-jnI"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wty-Dz-LwM" userLabel="closeButton">
+                                <rect key="frame" x="325" y="617" width="35" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="35" id="2DA-XO-IWH"/>
+                                    <constraint firstAttribute="height" constant="35" id="iqM-2P-Ck8"/>
+                                </constraints>
+                                <state key="normal" image="close_normal"/>
+                                <state key="highlighted" image="close_pressed"/>
+                                <connections>
+                                    <action selector="closeButtonClicked:" destination="aie-zJ-FpJ" eventType="touchDown" id="laS-YL-Akz"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -326,14 +324,18 @@
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="9vP-re-i4B" secondAttribute="bottom" id="38T-0D-iXK"/>
                             <constraint firstItem="Btq-Nk-7vX" firstAttribute="top" secondItem="K9Q-l3-e4b" secondAttribute="top" id="3NZ-rE-6Zi"/>
+                            <constraint firstAttribute="bottom" secondItem="9vP-re-i4B" secondAttribute="bottom" id="5wC-Ft-xjp"/>
                             <constraint firstAttribute="trailing" secondItem="9vP-re-i4B" secondAttribute="trailing" id="7me-k3-JT9"/>
                             <constraint firstItem="9vP-re-i4B" firstAttribute="top" secondItem="LpN-P6-guJ" secondAttribute="bottom" id="8RY-pU-3D0"/>
-                            <constraint firstAttribute="trailing" secondItem="hlv-vh-XsF" secondAttribute="trailing" constant="15" id="GU5-C8-nqa"/>
-                            <constraint firstAttribute="trailing" secondItem="DNO-E3-HcN" secondAttribute="trailing" constant="15" id="IbL-Xk-exq"/>
+                            <constraint firstAttribute="bottom" secondItem="kNc-8g-OO1" secondAttribute="bottom" constant="15" id="BgN-qX-mNO"/>
+                            <constraint firstAttribute="trailing" secondItem="Wty-Dz-LwM" secondAttribute="trailing" constant="15" id="KL6-hi-A2o"/>
                             <constraint firstAttribute="trailing" secondItem="Btq-Nk-7vX" secondAttribute="trailing" id="Kza-6J-iu1"/>
                             <constraint firstAttribute="bottom" secondItem="DNO-E3-HcN" secondAttribute="bottom" constant="15" id="M5M-Q9-iUP"/>
                             <constraint firstItem="wVi-zC-M8N" firstAttribute="leading" secondItem="LpN-P6-guJ" secondAttribute="leading" id="RsQ-mm-h4m"/>
+                            <constraint firstAttribute="bottom" secondItem="Wty-Dz-LwM" secondAttribute="bottom" constant="15" id="WhK-Hs-SjB"/>
+                            <constraint firstAttribute="trailing" secondItem="9vP-re-i4B" secondAttribute="trailing" id="Zk3-t8-Kth"/>
                             <constraint firstItem="wVi-zC-M8N" firstAttribute="trailing" secondItem="LpN-P6-guJ" secondAttribute="trailing" id="aO0-9c-8Za"/>
+                            <constraint firstAttribute="trailing" secondItem="kNc-8g-OO1" secondAttribute="trailing" constant="15" id="akM-IK-bW5"/>
                             <constraint firstItem="LpN-P6-guJ" firstAttribute="top" secondItem="Btq-Nk-7vX" secondAttribute="bottom" id="dka-Hw-cY9"/>
                             <constraint firstItem="wVi-zC-M8N" firstAttribute="bottom" secondItem="LpN-P6-guJ" secondAttribute="bottom" id="duM-rY-Qgs"/>
                             <constraint firstItem="Btq-Nk-7vX" firstAttribute="leading" secondItem="K9Q-l3-e4b" secondAttribute="leading" id="fZk-vB-jO6"/>
@@ -345,20 +347,21 @@
                     </view>
                     <navigationItem key="navigationItem" title="Detail" id="Anl-uD-BwL"/>
                     <connections>
-                        <outlet property="closeButton" destination="DNO-E3-HcN" id="C0M-uL-Vif"/>
+                        <outlet property="closeButton" destination="Wty-Dz-LwM" id="Ozc-Cz-gaY"/>
                         <outlet property="detailTableView" destination="9vP-re-i4B" id="Tgw-HT-ip6"/>
-                        <outlet property="editButton" destination="hlv-vh-XsF" id="WfP-Pz-flS"/>
+                        <outlet property="editButton" destination="kNc-8g-OO1" id="IzZ-gY-75a"/>
                         <outlet property="foodImage" destination="LpN-P6-guJ" id="5V7-YG-8HG"/>
                         <outlet property="foodName" destination="wVi-zC-M8N" id="PBg-jC-IUD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ea8-Q2-7hK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2721" y="88"/>
+            <point key="canvasLocation" x="2684" y="87.706146926536732"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="HEu-6X-i9j">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZRo-8g-Ai2" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xtA-Gt-T4N" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="lEe-xr-Li9">
@@ -370,9 +373,8 @@
                         <segue destination="eLo-zC-aGO" kind="relationship" relationship="rootViewController" id="38Y-9q-7MG"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ZRo-8g-Ai2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1196" y="88"/>
+            <point key="canvasLocation" x="1376" y="88"/>
         </scene>
     </scenes>
     <resources>

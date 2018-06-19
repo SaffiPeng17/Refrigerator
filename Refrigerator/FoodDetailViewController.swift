@@ -13,21 +13,41 @@ class FoodDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet var foodImage: UIImageView!
     @IBOutlet var foodName: UILabel!
     @IBOutlet var detailTableView: UITableView!
-
+    @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var closeButton: UIButton!
+    
     var foodImgRef = ""
     var foodNameRef = ""
     var detaildict = [String: String]()
+    var isEditMode: Bool! {
+        didSet {
+            closeButton.isHidden = !isEditMode
+            closeButton.isEnabled = isEditMode
+            editButton.isHidden = isEditMode
+            editButton.isEnabled = !isEditMode
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         foodImage.image = UIImage(named: foodImgRef)
         foodName.text = foodNameRef
+        isEditMode = false
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    //MARK: - Button events
+    @IBAction func editButtonClicked(_ sender: Any) {
+        isEditMode = true
+    }
+    
+    @IBAction func closeButtonClicked(_ sender: Any) {
+        isEditMode = false
     }
     
     // MARK: - TableView
@@ -46,15 +66,4 @@ class FoodDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         return cell
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

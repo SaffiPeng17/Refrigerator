@@ -13,23 +13,44 @@ class FoodDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet var foodImage: UIImageView!
     @IBOutlet var foodName: UILabel!
     @IBOutlet var detailTableView: UITableView!
+    @IBOutlet var editButton: UIButton!
+    @IBOutlet var closeButton: UIButton!
 
-    var foodImgRef = ""
-    var foodNameRef = ""
+    var selectedIdx = 0
     var detaildict = [String: String]()
+    var isEditMode: Bool! {
+        didSet {
+            closeButton.isHidden = !isEditMode
+            closeButton.isEnabled = isEditMode
+            editButton.isHidden = isEditMode
+            editButton.isEnabled = !isEditMode
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        foodImage.image = UIImage(named: foodImgRef)
-        foodName.text = foodNameRef
+        foodImage.image = UIImage(named: foods[selectedIdx].pic)
+        foodName.text = foods[selectedIdx].name
+        detaildict = ["quantity": foods[selectedIdx].quantity.description,
+                      "period": foods[selectedIdx].period]
+        isEditMode = false
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+    //MARK: - Button events
+    @IBAction func editButtonClicked(_ sender: Any) {
+        isEditMode = true
+    }
     
+    @IBAction func closeButtonClicked(_ sender: Any) {
+        isEditMode = false
+    }
+
     // MARK: - TableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return detaildict.count

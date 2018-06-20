@@ -11,17 +11,17 @@ import UIKit
 class IngredientTableViewController: UITableViewController {
     
     //Models
-    var foods = ["Onion", "Watermelon", "Banana", "Grapefruit", "Pumpkin",
-                 "Potato", "Carrot", "Cabbage", "Cucumber", "Pea",
-                 "Chicken", "Beef", "Cheese", "Butter", "Ham",
-                 "Sausage", "Milk", "Black Tea", "Curry", "Spaghetti", "Juice"]
-    
-    var foodimgs = ["onion.jpg", "watermelon.jpg", "banana.jpg", "grapefruit.jpg", "pumpkin.jpg",
-                    "potato.jpg", "carrot.jpg", "cabbage.jpg", "cucumber.jpg", "pea.jpg",
-                    "chicken.jpg", "beef.jpg", "cheese.jpg", "butter.jpg", "ham.jpg",
-                    "sausage.jpg", "milk.jpg", "blacktea.jpg", "curry.jpg", "spaghetti.jpg", "juice.jpg"]
-    
-    var foodSelect = Array(repeating: false, count: 21)
+//    var foods = ["Onion", "Watermelon", "Banana", "Grapefruit", "Pumpkin",
+//                 "Potato", "Carrot", "Cabbage", "Cucumber", "Pea",
+//                 "Chicken", "Beef", "Cheese", "Butter", "Ham",
+//                 "Sausage", "Milk", "Black Tea", "Curry", "Spaghetti", "Juice"]
+//
+//    var foodimgs = ["onion.jpg", "watermelon.jpg", "banana.jpg", "grapefruit.jpg", "pumpkin.jpg",
+//                    "potato.jpg", "carrot.jpg", "cabbage.jpg", "cucumber.jpg", "pea.jpg",
+//                    "chicken.jpg", "beef.jpg", "cheese.jpg", "butter.jpg", "ham.jpg",
+//                    "sausage.jpg", "milk.jpg", "blacktea.jpg", "curry.jpg", "spaghetti.jpg", "juice.jpg"]
+//
+//    var foodSelect = Array(repeating: false, count: 21)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,43 +39,43 @@ class IngredientTableViewController: UITableViewController {
     }
 
     // MARK: - DataSource
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return foods.count
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! IngredientTableViewCell
-        //Setup cell
-        cell.foodName.text = foods[indexPath.row]
-        cell.foodImage.image = UIImage(named: foodimgs[indexPath.row])
-        cell.accessoryType = foodSelect[indexPath.row] ? .checkmark : .none
-
-        return cell
-    }
+//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return foods.count
+//    }
+//
+//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! IngredientTableViewCell
+//        //Setup cell
+//        cell.foodName.text = foods[indexPath.row]
+//        cell.foodImage.image = UIImage(named: foodimgs[indexPath.row])
+//        cell.accessoryType = foodSelect[indexPath.row] ? .checkmark : .none
+//
+//        return cell
+//    }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let optionMenu = UIAlertController(title: nil, message: "What do you want?", preferredStyle: .actionSheet)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        optionMenu.addAction(cancelAction)
+//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let optionMenu = UIAlertController(title: nil, message: "What do you want?", preferredStyle: .actionSheet)
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//        optionMenu.addAction(cancelAction)
         
-        let selectTitle = foodSelect[indexPath.row] ? "de-Select" : "Select"
-        let selectAction = UIAlertAction(title: selectTitle, style: .default) { (action: UIAlertAction) in
-            let cell = tableView.cellForRow(at: indexPath)
-            self.foodSelect[indexPath.row] = !self.foodSelect[indexPath.row]
-            cell?.accessoryType = self.foodSelect[indexPath.row] ? .checkmark : .none
-        }
-        optionMenu.addAction(selectAction)
+//        let selectTitle = foodSelect[indexPath.row] ? "de-Select" : "Select"
+//        let selectAction = UIAlertAction(title: selectTitle, style: .default) { (action: UIAlertAction) in
+//            let cell = tableView.cellForRow(at: indexPath)
+//            self.foodSelect[indexPath.row] = !self.foodSelect[indexPath.row]
+//            cell?.accessoryType = self.foodSelect[indexPath.row] ? .checkmark : .none
+//        }
+//        optionMenu.addAction(selectAction)
         
-        let callAction = UIAlertAction(title: "Call 12345678", style: .default) { (action: UIAlertAction) in
-            let alert = UIAlertController(title: "Service Unavailable", message: "Sorry, ther call feature is not available yet. Please retry later.", preferredStyle: .alert)
-            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-            alert.addAction(action)
-            self.present(alert, animated: true, completion: nil)
-        }
-        optionMenu.addAction(callAction)
-        present(optionMenu, animated: true, completion: nil)
-        tableView.deselectRow(at: indexPath, animated: false)
-    }
+//        let callAction = UIAlertAction(title: "Call 12345678", style: .default) { (action: UIAlertAction) in
+//            let alert = UIAlertController(title: "Service Unavailable", message: "Sorry, ther call feature is not available yet. Please retry later.", preferredStyle: .alert)
+//            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+//            alert.addAction(action)
+//            self.present(alert, animated: true, completion: nil)
+//        }
+//        optionMenu.addAction(callAction)
+//        present(optionMenu, animated: true, completion: nil)
+//        tableView.deselectRow(at: indexPath, animated: false)
+//    }
 
     /*
     // Override to support conditional editing of the table view.

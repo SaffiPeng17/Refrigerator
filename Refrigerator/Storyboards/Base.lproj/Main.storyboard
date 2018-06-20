@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -27,7 +28,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="80" id="qFa-yf-Kjq" customClass="IngredientTableViewCell" customModule="Refrigerator" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="foodlistcell" rowHeight="80" id="qFa-yf-Kjq" customClass="FoodListViewCell" customModule="Refrigerator" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qFa-yf-Kjq" id="RC4-l3-4fZ">
@@ -120,7 +121,7 @@
                         </segmentedControl>
                     </navigationItem>
                     <connections>
-                        <outlet property="myTableView" destination="2Vn-ZR-e7T" id="IEM-I9-O2M"/>
+                        <outlet property="foodListTableView" destination="2Vn-ZR-e7T" id="P9Z-UY-oye"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LOt-EW-Esw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -130,7 +131,7 @@
         <!--Detail-->
         <scene sceneID="qSq-qH-xZ9">
             <objects>
-                <viewController id="aie-zJ-FpJ" customClass="FoodDetailViewController" customModule="Refrigerator" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="aie-zJ-FpJ" customClass="ItemViewController" customModule="Refrigerator" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vOy-63-DUf"/>
                         <viewControllerLayoutGuide type="bottom" id="CEp-1B-tXl"/>
@@ -152,6 +153,35 @@
                                     <constraint firstAttribute="width" constant="375" id="csQ-we-Pc1"/>
                                 </constraints>
                             </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="GFj-uz-pVE" userLabel="ImageEditStackView">
+                                <rect key="frame" x="328" y="262" width="32" height="72"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zCF-Gz-q1X">
+                                        <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="zCF-Gz-q1X" secondAttribute="height" multiplier="1:1" id="3jw-MT-rtK"/>
+                                            <constraint firstAttribute="height" constant="32" id="OHo-MA-p4N"/>
+                                        </constraints>
+                                        <state key="normal" title="Button" image="gallery_normal"/>
+                                        <state key="highlighted" image="gallery_pressed"/>
+                                        <connections>
+                                            <action selector="galleryButtonClicked:" destination="aie-zJ-FpJ" eventType="touchDown" id="xRp-yd-QOu"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4vr-rQ-gUj">
+                                        <rect key="frame" x="0.0" y="40" width="32" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="32" id="rCz-uD-TBO"/>
+                                            <constraint firstAttribute="width" secondItem="4vr-rQ-gUj" secondAttribute="height" multiplier="1:1" id="xgw-Ts-Xp4"/>
+                                        </constraints>
+                                        <state key="normal" title="Button" image="camera_normal"/>
+                                        <state key="highlighted" image="camera_pressed"/>
+                                        <connections>
+                                            <action selector="cameraButtonClicked:" destination="aie-zJ-FpJ" eventType="touchDown" id="Fnv-zW-PsZ"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wVi-zC-M8N">
                                 <rect key="frame" x="0.0" y="349" width="375" height="70"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
@@ -167,7 +197,7 @@
                                 <rect key="frame" x="0.0" y="419" width="375" height="248"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="cuK-fE-ikK">
-                                    <rect key="frame" x="0.0" y="78" width="375" height="44"/>
+                                    <rect key="frame" x="0.0" y="178" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
@@ -296,10 +326,10 @@
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kNc-8g-OO1" userLabel="editButton">
-                                <rect key="frame" x="325" y="617" width="35" height="35"/>
+                                <rect key="frame" x="328" y="620" width="32" height="32"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="35" id="Unx-pP-Qr7"/>
-                                    <constraint firstAttribute="height" constant="35" id="mnd-15-ecY"/>
+                                    <constraint firstAttribute="width" constant="32" id="Unx-pP-Qr7"/>
+                                    <constraint firstAttribute="height" constant="32" id="mnd-15-ecY"/>
                                 </constraints>
                                 <state key="normal" image="edit_normal"/>
                                 <state key="highlighted" image="edit_pressed"/>
@@ -308,10 +338,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wty-Dz-LwM" userLabel="closeButton">
-                                <rect key="frame" x="325" y="617" width="35" height="35"/>
+                                <rect key="frame" x="328" y="620" width="32" height="32"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="35" id="2DA-XO-IWH"/>
-                                    <constraint firstAttribute="height" constant="35" id="iqM-2P-Ck8"/>
+                                    <constraint firstAttribute="width" constant="32" id="2DA-XO-IWH"/>
+                                    <constraint firstAttribute="height" constant="32" id="iqM-2P-Ck8"/>
                                 </constraints>
                                 <state key="normal" image="close_normal"/>
                                 <state key="highlighted" image="close_pressed"/>
@@ -330,38 +360,39 @@
                             <constraint firstAttribute="bottom" secondItem="kNc-8g-OO1" secondAttribute="bottom" constant="15" id="BgN-qX-mNO"/>
                             <constraint firstAttribute="trailing" secondItem="Wty-Dz-LwM" secondAttribute="trailing" constant="15" id="KL6-hi-A2o"/>
                             <constraint firstAttribute="trailing" secondItem="Btq-Nk-7vX" secondAttribute="trailing" id="Kza-6J-iu1"/>
-                            <constraint firstAttribute="bottom" secondItem="DNO-E3-HcN" secondAttribute="bottom" constant="15" id="M5M-Q9-iUP"/>
                             <constraint firstItem="wVi-zC-M8N" firstAttribute="leading" secondItem="LpN-P6-guJ" secondAttribute="leading" id="RsQ-mm-h4m"/>
                             <constraint firstAttribute="bottom" secondItem="Wty-Dz-LwM" secondAttribute="bottom" constant="15" id="WhK-Hs-SjB"/>
                             <constraint firstAttribute="trailing" secondItem="9vP-re-i4B" secondAttribute="trailing" id="Zk3-t8-Kth"/>
                             <constraint firstItem="wVi-zC-M8N" firstAttribute="trailing" secondItem="LpN-P6-guJ" secondAttribute="trailing" id="aO0-9c-8Za"/>
                             <constraint firstAttribute="trailing" secondItem="kNc-8g-OO1" secondAttribute="trailing" constant="15" id="akM-IK-bW5"/>
+                            <constraint firstAttribute="trailing" secondItem="GFj-uz-pVE" secondAttribute="trailing" constant="15" id="cMR-j8-Eg6"/>
                             <constraint firstItem="LpN-P6-guJ" firstAttribute="top" secondItem="Btq-Nk-7vX" secondAttribute="bottom" id="dka-Hw-cY9"/>
                             <constraint firstItem="wVi-zC-M8N" firstAttribute="bottom" secondItem="LpN-P6-guJ" secondAttribute="bottom" id="duM-rY-Qgs"/>
+                            <constraint firstItem="wVi-zC-M8N" firstAttribute="top" secondItem="GFj-uz-pVE" secondAttribute="bottom" constant="15" id="eeD-n5-aUq"/>
                             <constraint firstItem="Btq-Nk-7vX" firstAttribute="leading" secondItem="K9Q-l3-e4b" secondAttribute="leading" id="fZk-vB-jO6"/>
                             <constraint firstItem="9vP-re-i4B" firstAttribute="leading" secondItem="K9Q-l3-e4b" secondAttribute="leading" id="ghi-cf-pUm"/>
                             <constraint firstAttribute="trailing" secondItem="LpN-P6-guJ" secondAttribute="trailing" id="sIE-Bg-7yu"/>
-                            <constraint firstAttribute="bottom" secondItem="hlv-vh-XsF" secondAttribute="bottom" constant="15" id="wI4-01-VPI"/>
                             <constraint firstItem="LpN-P6-guJ" firstAttribute="leading" secondItem="K9Q-l3-e4b" secondAttribute="leading" id="yfq-O2-EzQ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Detail" id="Anl-uD-BwL"/>
                     <connections>
+                        <outlet property="cameraButton" destination="4vr-rQ-gUj" id="4Kw-hc-Bcr"/>
                         <outlet property="closeButton" destination="Wty-Dz-LwM" id="Ozc-Cz-gaY"/>
                         <outlet property="detailTableView" destination="9vP-re-i4B" id="Tgw-HT-ip6"/>
                         <outlet property="editButton" destination="kNc-8g-OO1" id="IzZ-gY-75a"/>
                         <outlet property="foodImage" destination="LpN-P6-guJ" id="5V7-YG-8HG"/>
                         <outlet property="foodName" destination="wVi-zC-M8N" id="PBg-jC-IUD"/>
+                        <outlet property="galleryButton" destination="zCF-Gz-q1X" id="g9N-Sa-b8i"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ea8-Q2-7hK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2684" y="87.706146926536732"/>
+            <point key="canvasLocation" x="2625" y="88"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="HEu-6X-i9j">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ZRo-8g-Ai2" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xtA-Gt-T4N" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="lEe-xr-Li9">
@@ -373,14 +404,19 @@
                         <segue destination="eLo-zC-aGO" kind="relationship" relationship="rootViewController" id="38Y-9q-7MG"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZRo-8g-Ai2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1376" y="88"/>
+            <point key="canvasLocation" x="1249" y="88"/>
         </scene>
     </scenes>
     <resources>
+        <image name="camera_normal" width="128" height="128"/>
+        <image name="camera_pressed" width="128" height="128"/>
         <image name="close_normal" width="128" height="128"/>
         <image name="close_pressed" width="128" height="128"/>
         <image name="edit_normal" width="128" height="128"/>
         <image name="edit_pressed" width="128" height="128"/>
+        <image name="gallery_normal" width="128" height="128"/>
+        <image name="gallery_pressed" width="128" height="128"/>
     </resources>
 </document>

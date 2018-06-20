@@ -1,5 +1,5 @@
 //
-//  IngredientTableViewCell.swift
+//  FoodListViewCellswift
 //  Refrigerator
 //
 //  Created by Saffi on 11/07/2017.
@@ -8,17 +8,7 @@
 
 import UIKit
 
-class IngredientTableViewCell: UITableViewCell {
-
-    @IBOutlet var foodImage: UIImageView!
-    @IBOutlet var foodName: UILabel!
-    @IBOutlet var foodQuantity: UILabel!
-    @IBOutlet var foodPeriod: UILabel!
-    
-    @IBOutlet weak var nImage: UIImageView!
-    @IBOutlet weak var nName: UILabel!
-    @IBOutlet weak var nQuantity: UILabel!
-    @IBOutlet weak var nPeriod: UILabel!
+class FoodListViewCell: UITableViewCell {
     
     @IBOutlet weak var fImage: UIImageView!
     @IBOutlet weak var fName: UILabel!

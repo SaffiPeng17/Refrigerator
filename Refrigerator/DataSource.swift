@@ -8,6 +8,20 @@
 
 import Foundation
 
+class Foods {
+    var name = ""
+    var period = ""
+    var quantity = 0
+    var pic = ""
+    
+    init(name: String, period: String, quantity: Int, pic: String) {
+        self.name = name
+        self.period = period
+        self.quantity = quantity
+        self.pic = pic
+    }
+}
+
 //Models
 var foods: [Foods] = [
     Foods(name: "Onion", period: "2017-8-20", quantity: 3, pic: "onion.jpg"),
@@ -37,24 +51,5 @@ var foods: [Foods] = [
     Foods(name: "Juice", period: "2017-8-12", quantity: 1, pic: "juice.jpg")
 ]
 
-//    var foods = ["Onion", "Watermelon", "Banana", "Grapefruit", "Pumpkin",
-//                 "Potato", "Carrot", "Cabbage", "Cucumber", "Pea",
-//                 "Chicken", "Beef", "Cheese", "Butter", "Ham",
-//                 "Sausage", "Milk", "Black Tea", "Curry", "Spaghetti", "Juice"]
-//
-//    var foodimgs = ["onion.jpg", "watermelon.jpg", "banana.jpg", "grapefruit.jpg", "pumpkin.jpg",
-//                    "potato.jpg", "carrot.jpg", "cabbage.jpg", "cucumber.jpg", "pea.jpg",
-//                    "chicken.jpg", "beef.jpg", "cheese.jpg", "butter.jpg", "ham.jpg",
-//                    "sausage.jpg", "milk.jpg", "blacktea.jpg", "curry.jpg", "spaghetti.jpg", "juice.jpg"]
-//
 var foodSelect = Array(repeating: false, count: 21)
-//
-//    var quantity = ["3", "0.5", "6", "3", "1",
-//                    "2", "2", "1", "4", "7",
-//                    "0.75", "2", "3", "1", "6",
-//                    "9", "1.5", "1", "3", "3", "10"]
-//
-//    var period = ["2017/8/30", "2017/10/2", "", "", "",
-//                  "2017/7/23", "2017/8/30", "", "2017/8/2", "2017/10/2",
-//                  "2017/7/30", "2017/7/24", "2017/12/19", "2018/2/20", "2017/10/30",
-//                  "2017/10/17", "2017/7/28", "2017/7/10", "", "", "2017/9/2"]
+

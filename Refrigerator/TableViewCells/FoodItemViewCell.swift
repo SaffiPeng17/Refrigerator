@@ -1,17 +1,17 @@
 //
-//  InputTableViewCell.swift
+//  FoodItemViewCell.swift
 //  Refrigerator
 //
-//  Created by Saffi on 2018/6/14.
-//  Copyright © 2018 Saffi. All rights reserved.
+//  Created by Saffi on 18/07/2017.
+//  Copyright © 2017 Saffi. All rights reserved.
 //
 
 import UIKit
 
-class InputTableViewCell: UITableViewCell {
+class FoodItemViewCell: UITableViewCell {
 
     @IBOutlet var title: UILabel!
-    @IBOutlet var input: UITextField!
+    @IBOutlet var content: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

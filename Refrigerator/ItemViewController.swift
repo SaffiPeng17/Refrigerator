@@ -8,23 +8,48 @@
 
 import UIKit
 
+enum FoodDataType {
+    case image
+    case tabledata
+}
+
+enum TableItemIdx: Int {
+    case quantity = 0
+    case vailddate
+    
+    static var allItems: [String] {
+        return ["quantity", "period"]
+    }
+}
+
 class ItemViewController: UIViewController {
 
-    @IBOutlet var foodImage: UIImageView!
-    @IBOutlet var foodName: UILabel!
-    @IBOutlet var detailTableView: UITableView!
+    @IBOutlet var foodImage: UIImageView! {
+        didSet {
+            fetchFoodData(dataType: .image)
+        }
+    }
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet var detailTableView: UITableView! {
+        didSet {
+            fetchFoodData(dataType: .tabledata)
+        }
+    }
     @IBOutlet var editButton: UIButton!
     @IBOutlet var closeButton: UIButton!
     @IBOutlet weak var cameraButton: UIButton!
     @IBOutlet weak var galleryButton: UIButton!
     
     var selectedIdx = 0 //decide the index data for show
-    var detaildict = [String: String]()
+    var titleArray = TableItemIdx.allItems
+    var valueArray = [Any]()
     var isEditMode: Bool! {
         didSet {
+            nameTextField.isEnabled = isEditMode
+            nameTextField.textColor = isEditMode ? UIColor.editYellow : UIColor.white
             editButton.isHidden = isEditMode
             editButton.isEnabled = !isEditMode
-            //Editing state
+            
             closeButton.isHidden = !isEditMode
             closeButton.isEnabled = isEditMode
             cameraButton.isHidden = !isEditMode
@@ -33,31 +58,86 @@ class ItemViewController: UIViewController {
             galleryButton.isEnabled = isEditMode
         }
     }
+    var viewShiftY: (name: CGFloat?, quantity: CGFloat?)
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        foodImage.image = UIImage(named: foods[selectedIdx].pic)
-        foodName.text = foods[selectedIdx].name
-        detaildict = ["quantity": foods[selectedIdx].quantity.description,
-                      "period": foods[selectedIdx].period]
         isEditMode = false
+        nameTextField.text = foods[selectedIdx].name
+        nameTextField.delegate = self
+        //Add notification
+        addNotifications()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    //點一下Keyboard以外的地方，會收起鍵盤
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+    
+    func addNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(notifyKeyboardChangeFrame(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+    }
+    
+    @objc func notifyKeyboardChangeFrame(notification: NSNotification) {
+        //Get the height of Keyboard
+        let info = notification.userInfo!
+        let keyboardFrame = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        var keyboardY = keyboardFrame.minY
+        //7 為 view 調整位置之後，TextField 與 Keyboard 的間距
+        var textFieldLowestPoint = CGFloat(0.0)
+        
+        view.frame.origin.y = 0
+        if nameTextField.isFirstResponder {
+            keyboardY = keyboardY-7
+            textFieldLowestPoint = detailTableView.frame.origin.y
+            if textFieldLowestPoint > keyboardY {
+                if viewShiftY.name == nil {
+                    view.frame.origin.y = view.frame.origin.y-abs(textFieldLowestPoint-keyboardY)
+                    viewShiftY.name = view.frame.origin.y
+                } else {
+                    view.frame.origin.y = viewShiftY.name!
+                }
+            }
+        } else {
+            keyboardY = keyboardY-30
+            textFieldLowestPoint = detailTableView.frame.origin.y+50
+            if textFieldLowestPoint > keyboardY {
+                if viewShiftY.quantity == nil {
+                    view.frame.origin.y = view.frame.origin.y-abs(textFieldLowestPoint-keyboardY)
+                    viewShiftY.quantity = view.frame.origin.y
+                } else {
+                    view.frame.origin.y = viewShiftY.quantity!
+                }
+            }
+        }
+    }
+    
+    //MARK: - Table data
+    func fetchFoodData(dataType: FoodDataType) {
+        switch dataType {
+        case .image:
+            foodImage.image = UIImage(named: foods[selectedIdx].pic)
+        case .tabledata:
+            valueArray = [foods[selectedIdx].quantity.description, foods[selectedIdx].period]
+//        default:
+        }
+    }
 
     //MARK: - Button events
     @IBAction func editButtonClicked(_ sender: Any) {
         isEditMode = true
-//        detailTableView.reloadData()
+        detailTableView.reloadData()
     }
     
     @IBAction func closeButtonClicked(_ sender: Any) {
         isEditMode = false
-//        detailTableView.reloadData()
+        detailTableView.reloadData()
     }
 
     @IBAction func galleryButtonClicked(_ sender: Any) {
@@ -92,19 +172,34 @@ class ItemViewController: UIViewController {
 //MARK: - UITableViewDelegate, UITableViewDataSource
 extension ItemViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return detaildict.count
+        return titleArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "detailcell", for: indexPath) as! FoodDetailTableViewCell
-        
-        for (index, dict) in detaildict.enumerated() {
-            if index == indexPath.row {
-                cell.title.text = dict.key
-                cell.content.text = dict.value
+        if isEditMode {
+            switch indexPath.row {
+            case TableItemIdx.quantity.rawValue:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "inputcell", for: indexPath) as! InputViewCell
+                cell.title.text = titleArray[indexPath.row]
+                cell.input.text = String(describing: valueArray[indexPath.row])
+                return cell
+            case TableItemIdx.vailddate.rawValue:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "datecell", for: indexPath) as! DateViewCell
+                cell.title.text = titleArray[indexPath.row]
+                cell.dateButton.setTitle(String(describing: valueArray[indexPath.row]), for: .normal)
+                return cell
+            default:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "fooditemcell", for: indexPath) as! FoodItemViewCell
+                cell.title.text = titleArray[indexPath.row]
+                cell.content.text = String(describing: valueArray[indexPath.row])
+                return cell
             }
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "fooditemcell", for: indexPath) as! FoodItemViewCell
+            cell.title.text = titleArray[indexPath.row]
+            cell.content.text = String(describing: valueArray[indexPath.row])
+            return cell
         }
-        return cell
     }
 }
 
@@ -120,5 +215,12 @@ extension ItemViewController: UIImagePickerControllerDelegate, UINavigationContr
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension ItemViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }

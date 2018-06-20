@@ -1,17 +1,17 @@
 //
-//  FoodDetailTableViewCell.swift
+//  DateViewCell.swift
 //  Refrigerator
 //
-//  Created by Saffi on 18/07/2017.
-//  Copyright © 2017 Saffi. All rights reserved.
+//  Created by Saffi on 2018/6/14.
+//  Copyright © 2018 Saffi. All rights reserved.
 //
 
 import UIKit
 
-class FoodDetailTableViewCell: UITableViewCell {
+class DateViewCell: UITableViewCell {
 
     @IBOutlet var title: UILabel!
-    @IBOutlet var content: UILabel!
+    @IBOutlet weak var dateButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -1,5 +1,5 @@
 //
-//  DateTableViewCell.swift
+//  InputViewCell.swift
 //  Refrigerator
 //
 //  Created by Saffi on 2018/6/14.
@@ -8,14 +8,15 @@
 
 import UIKit
 
-class DateTableViewCell: UITableViewCell {
+class InputViewCell: UITableViewCell {
 
     @IBOutlet var title: UILabel!
-    @IBOutlet var datepicker: UIButton!
+    @IBOutlet var input: UITextField!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        input.delegate = self
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -23,5 +24,11 @@ class DateTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+}
 
+extension InputViewCell: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }

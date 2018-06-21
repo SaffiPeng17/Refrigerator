@@ -48,10 +48,12 @@ class ItemViewController: UIViewController {
     var selectedIdx = 0 //decide the index data for show
     var titleArray = TableItemIdx.dispItems
     var valueArray = [Any]()
+    var setDate = Date()
+    var attribureEditMode = false
     var isEditMode: Bool! {
         didSet {
             titleArray = isEditMode ? TableItemIdx.editItems : TableItemIdx.dispItems
-            
+
             nameTextField.isEnabled = isEditMode
             nameTextField.textColor = isEditMode ? UIColor.editYellow : UIColor.white
             editButton.isHidden = isEditMode
@@ -70,7 +72,7 @@ class ItemViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        isEditMode = false
+        isEditMode = attribureEditMode
         nameTextField.text = foods[selectedIdx].name
         nameTextField.delegate = self
         //Add notification
@@ -80,6 +82,16 @@ class ItemViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    //轉場設定
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDialog" {
+            let destController = segue.destination as! DialogViewController
+            destController.pickerType = .date
+            destController.datePicker.setDate(setDate, animated: true)
+//            destController.currentDate = setDate
+        }
     }
     
     //點一下Keyboard以外的地方，會收起鍵盤
@@ -191,18 +203,39 @@ extension ItemViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.input.text = String(describing: valueArray[indexPath.row])
                 return cell
             default:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "buttoncell", for: indexPath) as! ButtonViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "fooditemcell", for: indexPath) as! FoodItemViewCell
                 cell.title.text = titleArray[indexPath.row]
-                cell.dateButton.setTitle(String(describing: valueArray[indexPath.row]), for: .normal)
+                cell.content.text = String(describing: valueArray[indexPath.row])
+                cell.content.textColor = UIColor.editBlue
                 return cell
             }
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "fooditemcell", for: indexPath) as! FoodItemViewCell
             cell.title.text = titleArray[indexPath.row]
             cell.content.text = String(describing: valueArray[indexPath.row])
+            cell.content.textColor = UIColor.black
             return cell
         }
     }
+    
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        if isEditMode {
+//            switch indexPath.row {
+//            case TableItemIdx.vailddate.rawValue:
+//                setDate = String(describing: valueArray[indexPath.row])
+////                present(DialogViewController(), animated: true, completion: nil)
+////                let ctrler = DialogViewController()
+////                ctrler.dialogDelegate = self
+////                present(ctrler, animated: true, completion: nil)
+////                viewController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+////                self.present(viewController, animated: true, completion: nil)
+//            case TableItemIdx.classified.rawValue:
+//                return
+//            default:
+//                return
+//            }
+//        }
+//    }
 }
 
 //MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
@@ -226,3 +259,20 @@ extension ItemViewController: UITextFieldDelegate {
         return true
     }
 }
+
+//extension ItemViewController: DialogDelegate {
+//    func doneButtonTouched(date: Date) {
+//        //Setting date
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "yyyy-MM-dd"
+//
+//        //Switch View
+//        let ctrler = ItemViewController()
+//        ctrler.isEditMode = true
+//        ctrler.valueArray[1] = formatter.string(from: date)
+//        ctrler.detailTableView.reloadData()
+//        present(ctrler, animated: true, completion: nil)
+//    }
+//}
+
+

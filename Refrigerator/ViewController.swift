@@ -8,6 +8,9 @@
 
 import UIKit
 
+
+var selectedIdx = 0
+
 class ViewController: UIViewController {
     
     @IBOutlet weak var foodListTableView: UITableView!
@@ -31,6 +34,7 @@ class ViewController: UIViewController {
             if let idxPath = foodListTableView.indexPathForSelectedRow {
                 let destController = segue.destination as! ItemViewController
                 destController.selectedIdx = idxPath.row
+                destController.attribureEditMode = false
             }
         }
     }

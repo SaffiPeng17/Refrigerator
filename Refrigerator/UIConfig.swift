@@ -14,4 +14,5 @@ let colorRGBA: ((CGFloat, CGFloat, CGFloat, CGFloat) -> UIColor) = { r,g,b,a in
 }
 extension UIColor {
     static let editYellow = colorRGBA(249, 218, 97, 1)
+    static let editBlue = colorRGBA(0, 122, 255, 1)
 }

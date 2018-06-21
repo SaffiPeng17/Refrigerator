@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		04686FAA20D2C063000F52DD /* DateViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04686FA920D2C063000F52DD /* DateViewCell.swift */; };
+		04686FAA20D2C063000F52DD /* ButtonViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04686FA920D2C063000F52DD /* ButtonViewCell.swift */; };
 		04686FAC20D2C0EB000F52DD /* InputViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04686FAB20D2C0EB000F52DD /* InputViewCell.swift */; };
 		04686FAE20D2C44E000F52DD /* FoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04686FAD20D2C44E000F52DD /* FoodModel.swift */; };
 		04C9F3001F15204800E92CC0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C9F2FF1F15204800E92CC0 /* ViewController.swift */; };
@@ -22,7 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		04686FA920D2C063000F52DD /* DateViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateViewCell.swift; sourceTree = "<group>"; };
+		04686FA920D2C063000F52DD /* ButtonViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonViewCell.swift; sourceTree = "<group>"; };
 		04686FAB20D2C0EB000F52DD /* InputViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewCell.swift; sourceTree = "<group>"; };
 		04686FAD20D2C44E000F52DD /* FoodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodModel.swift; sourceTree = "<group>"; };
 		04C9F2FF1F15204800E92CC0 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -86,7 +86,7 @@
 			children = (
 				04D6EC521F140535003102DA /* FoodListViewCell.swift */,
 				04C9F3051F1E4D9500E92CC0 /* FoodItemViewCell.swift */,
-				04686FA920D2C063000F52DD /* DateViewCell.swift */,
+				04686FA920D2C063000F52DD /* ButtonViewCell.swift */,
 				04686FAB20D2C0EB000F52DD /* InputViewCell.swift */,
 			);
 			path = TableViewCells;
@@ -177,7 +177,7 @@
 			files = (
 				04C9F3061F1E4D9500E92CC0 /* FoodItemViewCell.swift in Sources */,
 				04D6EC3B1F13D7FD003102DA /* AppDelegate.swift in Sources */,
-				04686FAA20D2C063000F52DD /* DateViewCell.swift in Sources */,
+				04686FAA20D2C063000F52DD /* ButtonViewCell.swift in Sources */,
 				04C9F3001F15204800E92CC0 /* ViewController.swift in Sources */,
 				04C9F3041F1E132200E92CC0 /* ItemViewController.swift in Sources */,
 				04686FAC20D2C0EB000F52DD /* InputViewCell.swift in Sources */,

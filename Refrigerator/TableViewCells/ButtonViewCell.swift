@@ -1,5 +1,5 @@
 //
-//  DateViewCell.swift
+//  ButtonViewCell.swift
 //  Refrigerator
 //
 //  Created by Saffi on 2018/6/14.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DateViewCell: UITableViewCell {
+class ButtonViewCell: UITableViewCell {
 
     @IBOutlet var title: UILabel!
     @IBOutlet weak var dateButton: UIButton!

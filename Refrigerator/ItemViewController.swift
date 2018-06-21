@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 enum FoodDataType {
     case image
     case tabledata
@@ -16,9 +17,13 @@ enum FoodDataType {
 enum TableItemIdx: Int {
     case quantity = 0
     case vailddate
+    case classified
     
-    static var allItems: [String] {
+    static var dispItems: [String] {
         return ["quantity", "period"]
+    }
+    static var editItems: [String] {
+        return ["quantity", "period", "classified"]
     }
 }
 
@@ -41,10 +46,12 @@ class ItemViewController: UIViewController {
     @IBOutlet weak var galleryButton: UIButton!
     
     var selectedIdx = 0 //decide the index data for show
-    var titleArray = TableItemIdx.allItems
+    var titleArray = TableItemIdx.dispItems
     var valueArray = [Any]()
     var isEditMode: Bool! {
         didSet {
+            titleArray = isEditMode ? TableItemIdx.editItems : TableItemIdx.dispItems
+            
             nameTextField.isEnabled = isEditMode
             nameTextField.textColor = isEditMode ? UIColor.editYellow : UIColor.white
             editButton.isHidden = isEditMode
@@ -124,7 +131,7 @@ class ItemViewController: UIViewController {
         case .image:
             foodImage.image = UIImage(named: foods[selectedIdx].pic)
         case .tabledata:
-            valueArray = [foods[selectedIdx].quantity.description, foods[selectedIdx].period]
+            valueArray = [foods[selectedIdx].quantity.description, foods[selectedIdx].period, foods[selectedIdx].classified]
 //        default:
         }
     }
@@ -183,15 +190,10 @@ extension ItemViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.title.text = titleArray[indexPath.row]
                 cell.input.text = String(describing: valueArray[indexPath.row])
                 return cell
-            case TableItemIdx.vailddate.rawValue:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "datecell", for: indexPath) as! DateViewCell
+            default:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "buttoncell", for: indexPath) as! ButtonViewCell
                 cell.title.text = titleArray[indexPath.row]
                 cell.dateButton.setTitle(String(describing: valueArray[indexPath.row]), for: .normal)
-                return cell
-            default:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "fooditemcell", for: indexPath) as! FoodItemViewCell
-                cell.title.text = titleArray[indexPath.row]
-                cell.content.text = String(describing: valueArray[indexPath.row])
                 return cell
             }
         } else {

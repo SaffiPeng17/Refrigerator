@@ -44,11 +44,18 @@ class ItemViewController: UIViewController {
     @IBOutlet var closeButton: UIButton!
     @IBOutlet weak var cameraButton: UIButton!
     @IBOutlet weak var galleryButton: UIButton!
+    //DialogView
+    @IBOutlet weak var dialogSuperView: UIView!
+    @IBOutlet weak var dialogView: UIView!
+    @IBOutlet weak var dialogTitle: UILabel!
+    @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet weak var classifiedPicker: UIPickerView!
+    @IBOutlet weak var doneButton: UIButton!
+    
     
     var selectedIdx = 0 //decide the index data for show
     var titleArray = TableItemIdx.dispItems
     var valueArray = [Any]()
-    var setDate = Date()
     var attribureEditMode = false
     var isEditMode: Bool! {
         didSet {
@@ -75,6 +82,9 @@ class ItemViewController: UIViewController {
         isEditMode = attribureEditMode
         nameTextField.text = foods[selectedIdx].name
         nameTextField.delegate = self
+        
+        dialogView.layer.cornerRadius = 15
+        doneButton.layer.cornerRadius = 15
         //Add notification
         addNotifications()
     }
@@ -82,16 +92,6 @@ class ItemViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    //轉場設定
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDialog" {
-            let destController = segue.destination as! DialogViewController
-            destController.pickerType = .date
-            destController.datePicker.setDate(setDate, animated: true)
-//            destController.currentDate = setDate
-        }
     }
     
     //點一下Keyboard以外的地方，會收起鍵盤
@@ -186,6 +186,19 @@ class ItemViewController: UIViewController {
             present(alert, animated: true, completion: nil)
         }
     }
+    
+    @IBAction func diaCloseButtonClicked(_ sender: Any) {
+        dialogSuperView.isHidden = true
+    }
+    
+    @IBAction func diaDoneButtonClicked(_ sender: Any) {
+        dialogSuperView.isHidden = true
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        valueArray[1] = formatter.string(from: datePicker.date)
+        detailTableView.reloadData()
+    }
 }
 
 //MARK: - UITableViewDelegate, UITableViewDataSource
@@ -203,39 +216,40 @@ extension ItemViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.input.text = String(describing: valueArray[indexPath.row])
                 return cell
             default:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "fooditemcell", for: indexPath) as! FoodItemViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "buttoncell", for: indexPath) as! ButtonViewCell
                 cell.title.text = titleArray[indexPath.row]
-                cell.content.text = String(describing: valueArray[indexPath.row])
-                cell.content.textColor = UIColor.editBlue
+                cell.button.setTitle(String(describing: valueArray[indexPath.row]), for: .normal)
+                cell.buttonCellDelegate = self
                 return cell
             }
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "fooditemcell", for: indexPath) as! FoodItemViewCell
             cell.title.text = titleArray[indexPath.row]
             cell.content.text = String(describing: valueArray[indexPath.row])
-            cell.content.textColor = UIColor.black
             return cell
         }
     }
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        if isEditMode {
 //            switch indexPath.row {
 //            case TableItemIdx.vailddate.rawValue:
-//                setDate = String(describing: valueArray[indexPath.row])
-////                present(DialogViewController(), animated: true, completion: nil)
-////                let ctrler = DialogViewController()
-////                ctrler.dialogDelegate = self
-////                present(ctrler, animated: true, completion: nil)
-////                viewController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-////                self.present(viewController, animated: true, completion: nil)
+//                dialogSuperView.isHidden = false
+//                dialogTitle.text = "Pick A Date"
+//
+//                let formatter = DateFormatter()
+//                formatter.dateFormat = "yyyy-MM-dd"
+//                let pickerDate = formatter.date(from: String(describing: valueArray[indexPath.row]))!
+//                datePicker.setDate(pickerDate, animated: true)
+//
 //            case TableItemIdx.classified.rawValue:
 //                return
+//
 //            default:
 //                return
 //            }
 //        }
-//    }
+    }
 }
 
 //MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
@@ -260,19 +274,36 @@ extension ItemViewController: UITextFieldDelegate {
     }
 }
 
-//extension ItemViewController: DialogDelegate {
-//    func doneButtonTouched(date: Date) {
-//        //Setting date
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "yyyy-MM-dd"
-//
-//        //Switch View
-//        let ctrler = ItemViewController()
-//        ctrler.isEditMode = true
-//        ctrler.valueArray[1] = formatter.string(from: date)
-//        ctrler.detailTableView.reloadData()
-//        present(ctrler, animated: true, completion: nil)
-//    }
-//}
+extension ItemViewController: ButtonCellDelegate {
+    func buttonCliced(info: (title: String, button: String)) {
+        print("\(info.title) : \(info.button)")
+        let index = (info.title == "period") ? 1 : 2
+        
+        switch index {
+        case TableItemIdx.vailddate.rawValue:
+            dialogSuperView.isHidden = false
+            datePicker.isHidden = false
+            datePicker.isEnabled = true
+            classifiedPicker.isHidden = true
+            
+            dialogTitle.text = "Pick A Date"
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            let pickerDate = formatter.date(from: String(describing: valueArray[index]))!
+            datePicker.setDate(pickerDate, animated: true)
+            
+        case TableItemIdx.classified.rawValue:
+            dialogSuperView.isHidden = false
+            datePicker.isHidden = true
+            datePicker.isEnabled = false
+            classifiedPicker.isHidden = false
+            
+            dialogTitle.text = "Pick A Classified"
+            
+        default:
+            return
+        }
+    }
+}
 
 

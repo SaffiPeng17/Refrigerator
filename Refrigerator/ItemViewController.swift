@@ -222,6 +222,7 @@ extension ItemViewController: UITableViewDataSource, UITableViewDelegate {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "inputcell", for: indexPath) as! InputViewCell
                 cell.title.text = titleArray[indexPath.row]
                 cell.input.text = String(describing: valueArray[indexPath.row])
+                cell.input.delegate = self
                 return cell
             default:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "fooditemcell", for: indexPath) as! FoodItemViewCell
@@ -315,9 +316,8 @@ extension ItemViewController: UIPickerViewDataSource, UIPickerViewDelegate {
 
 //MARK: - UITextFieldDelegate
 extension ItemViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        valueArray[0] = textField.text!
     }
 }
 

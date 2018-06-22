@@ -200,7 +200,7 @@
                                 <color key="separatorColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="cuK-fE-ikK">
-                                    <rect key="frame" x="0.0" y="178" width="375" height="44"/>
+                                    <rect key="frame" x="0.0" y="128" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
@@ -283,47 +283,6 @@
                                             <outlet property="title" destination="BYM-Rz-H33" id="ZGT-94-gaG"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="buttoncell" rowHeight="50" id="u5q-mw-fa2" customClass="ButtonViewCell" customModule="Refrigerator" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="128" width="375" height="50"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="u5q-mw-fa2" id="F8c-V7-7cX">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="49.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Hib-jT-ug0">
-                                                    <rect key="frame" x="20" y="7" width="335" height="36"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="260" verticalHuggingPriority="251" text="label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="100" translatesAutoresizingMaskIntoConstraints="NO" id="8WE-bV-0fN">
-                                                            <rect key="frame" x="0.0" y="0.0" width="106.5" height="36"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                            <color key="textColor" red="0.54709598039999996" green="0.54709598039999996" blue="0.54709598039999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="btX-Yx-Bn8">
-                                                            <rect key="frame" x="121.5" y="0.0" width="213.5" height="36"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                            <state key="normal" title="Button"/>
-                                                            <connections>
-                                                                <action selector="buttonClicked:" destination="u5q-mw-fa2" eventType="touchDown" id="Ce5-dS-Re9"/>
-                                                            </connections>
-                                                        </button>
-                                                    </subviews>
-                                                    <constraints>
-                                                        <constraint firstItem="8WE-bV-0fN" firstAttribute="width" secondItem="btX-Yx-Bn8" secondAttribute="width" multiplier="0.5" id="w5F-7s-YTF"/>
-                                                    </constraints>
-                                                </stackView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="Hib-jT-ug0" firstAttribute="leading" secondItem="F8c-V7-7cX" secondAttribute="leading" constant="20" id="LLQ-tm-TPX"/>
-                                                <constraint firstItem="Hib-jT-ug0" firstAttribute="centerY" secondItem="F8c-V7-7cX" secondAttribute="centerY" id="Rlq-k6-vU9"/>
-                                                <constraint firstAttribute="trailing" secondItem="Hib-jT-ug0" secondAttribute="trailing" constant="20" id="lPn-2C-wkN"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="button" destination="btX-Yx-Bn8" id="32R-bh-16U"/>
-                                            <outlet property="title" destination="8WE-bV-0fN" id="soe-bt-ZRi"/>
-                                        </connections>
-                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="aie-zJ-FpJ" id="PJg-db-pl0"/>
@@ -392,9 +351,16 @@
                                                                 <date key="date" timeIntervalSinceReferenceDate="551268687.68759704">
                                                                     <!--2018-06-21 10:11:27 +0000-->
                                                                 </date>
+                                                                <date key="minimumDate" timeIntervalSinceReferenceDate="551617200">
+                                                                    <!--2018-06-25 11:00:00 +0000-->
+                                                                </date>
                                                             </datePicker>
                                                             <pickerView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TPh-xb-GvT">
                                                                 <rect key="frame" x="0.0" y="0.0" width="257" height="182"/>
+                                                                <connections>
+                                                                    <outlet property="dataSource" destination="aie-zJ-FpJ" id="dmL-F3-osk"/>
+                                                                    <outlet property="delegate" destination="aie-zJ-FpJ" id="sdg-d8-IBK"/>
+                                                                </connections>
                                                             </pickerView>
                                                         </subviews>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -16,6 +16,10 @@ enum Classified: String {
     case dairy = "Dairy Products"
     case drink = "Drink"
     case delicatessen = "Delicatessen"
+    
+    static var strArray: [String] {
+        return [self.vegetable.rawValue, self.fruit.rawValue, self.meat.rawValue, self.dairy.rawValue, self.drink.rawValue, self.delicatessen.rawValue]
+    }
 }
 let classifiedStr: ((Classified) -> String) = { classified in
     return classified.rawValue

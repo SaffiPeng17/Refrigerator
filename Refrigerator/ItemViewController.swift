@@ -20,10 +20,10 @@ enum TableItemIdx: Int {
     case classified
     
     static var dispItems: [String] {
-        return ["quantity", "period"]
+        return ["quantity", "vaild date"]
     }
     static var editItems: [String] {
-        return ["quantity", "period", "classified"]
+        return ["quantity", "vaild date", "classified"]
     }
 }
 
@@ -54,6 +54,8 @@ class ItemViewController: UIViewController {
     
     
     var selectedIdx = 0 //decide the index data for show
+    var cellSelectedIdx = 0
+    var classifiedSelectedIdx = 0
     var titleArray = TableItemIdx.dispItems
     var valueArray = [Any]()
     var attribureEditMode = false
@@ -144,7 +146,6 @@ class ItemViewController: UIViewController {
             foodImage.image = UIImage(named: foods[selectedIdx].pic)
         case .tabledata:
             valueArray = [foods[selectedIdx].quantity.description, foods[selectedIdx].period, foods[selectedIdx].classified]
-//        default:
         }
     }
 
@@ -194,15 +195,22 @@ class ItemViewController: UIViewController {
     @IBAction func diaDoneButtonClicked(_ sender: Any) {
         dialogSuperView.isHidden = true
         
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        valueArray[1] = formatter.string(from: datePicker.date)
+        switch cellSelectedIdx {
+        case TableItemIdx.vailddate.rawValue:
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            valueArray[cellSelectedIdx] = formatter.string(from: datePicker.date)
+        case TableItemIdx.classified.rawValue:
+            valueArray[cellSelectedIdx] = Classified.strArray[classifiedSelectedIdx]
+        default:
+            print("?? cellSelectedIdx = \(cellSelectedIdx)")
+        }
         detailTableView.reloadData()
     }
 }
 
 //MARK: - UITableViewDelegate, UITableViewDataSource
-extension ItemViewController: UITableViewDelegate, UITableViewDataSource {
+extension ItemViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return titleArray.count
     }
@@ -216,39 +224,57 @@ extension ItemViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.input.text = String(describing: valueArray[indexPath.row])
                 return cell
             default:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "buttoncell", for: indexPath) as! ButtonViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "fooditemcell", for: indexPath) as! FoodItemViewCell
                 cell.title.text = titleArray[indexPath.row]
-                cell.button.setTitle(String(describing: valueArray[indexPath.row]), for: .normal)
-                cell.buttonCellDelegate = self
+                cell.content.text = String(describing: valueArray[indexPath.row])
+                cell.content.textColor = UIColor.editBlue
                 return cell
             }
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "fooditemcell", for: indexPath) as! FoodItemViewCell
             cell.title.text = titleArray[indexPath.row]
             cell.content.text = String(describing: valueArray[indexPath.row])
+            cell.content.textColor = UIColor.black
             return cell
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if isEditMode {
-//            switch indexPath.row {
-//            case TableItemIdx.vailddate.rawValue:
-//                dialogSuperView.isHidden = false
-//                dialogTitle.text = "Pick A Date"
-//
-//                let formatter = DateFormatter()
-//                formatter.dateFormat = "yyyy-MM-dd"
-//                let pickerDate = formatter.date(from: String(describing: valueArray[indexPath.row]))!
-//                datePicker.setDate(pickerDate, animated: true)
-//
-//            case TableItemIdx.classified.rawValue:
-//                return
-//
-//            default:
-//                return
-//            }
-//        }
+        if isEditMode {
+            cellSelectedIdx = indexPath.row
+            switch indexPath.row {
+            case TableItemIdx.vailddate.rawValue:
+                dialogSuperView.isHidden = false
+                datePicker.isHidden = false
+                datePicker.isEnabled = true
+                classifiedPicker.isHidden = true
+                
+                dialogTitle.text = "Pick A Date"
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd"
+                let pickerDate = formatter.date(from: String(describing: valueArray[indexPath.row]))!
+                datePicker.setDate(pickerDate, animated: true)
+
+            case TableItemIdx.classified.rawValue:
+                dialogSuperView.isHidden = false
+                datePicker.isHidden = true
+                datePicker.isEnabled = false
+                classifiedPicker.isHidden = false
+                
+                dialogTitle.text = "Pick A Classified"
+                let currentClassified = String(describing: valueArray[indexPath.row])
+                for (idx, obj) in Classified.strArray.enumerated() {
+                    if obj == currentClassified {
+                        classifiedSelectedIdx = idx
+                        break
+                    }
+                }
+                classifiedPicker.selectRow(classifiedSelectedIdx, inComponent: 0, animated: true)
+
+            default:
+                return
+            }
+        }
     }
 }
 
@@ -267,42 +293,31 @@ extension ItemViewController: UIImagePickerControllerDelegate, UINavigationContr
     }
 }
 
+//MARK: - UIPickerViewDelegate, UIPickerViewDataSource
+extension ItemViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+    //SETUP: How many kinds of option?
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    //SETUP: How many items of options?
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return Classified.strArray.count
+    }
+    //SETUP: The content of every item.
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return Classified.strArray[row]
+    }
+    //SETUP: Selected a row.
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        classifiedSelectedIdx = row
+    }
+}
+
+//MARK: - UITextFieldDelegate
 extension ItemViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
-    }
-}
-
-extension ItemViewController: ButtonCellDelegate {
-    func buttonCliced(info: (title: String, button: String)) {
-        print("\(info.title) : \(info.button)")
-        let index = (info.title == "period") ? 1 : 2
-        
-        switch index {
-        case TableItemIdx.vailddate.rawValue:
-            dialogSuperView.isHidden = false
-            datePicker.isHidden = false
-            datePicker.isEnabled = true
-            classifiedPicker.isHidden = true
-            
-            dialogTitle.text = "Pick A Date"
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd"
-            let pickerDate = formatter.date(from: String(describing: valueArray[index]))!
-            datePicker.setDate(pickerDate, animated: true)
-            
-        case TableItemIdx.classified.rawValue:
-            dialogSuperView.isHidden = false
-            datePicker.isHidden = true
-            datePicker.isEnabled = false
-            classifiedPicker.isHidden = false
-            
-            dialogTitle.text = "Pick A Classified"
-            
-        default:
-            return
-        }
     }
 }
 

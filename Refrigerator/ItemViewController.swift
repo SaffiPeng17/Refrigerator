@@ -201,7 +201,7 @@ class ItemViewController: UIViewController {
             formatter.dateFormat = "yyyy-MM-dd"
             valueArray[cellSelectedIdx] = formatter.string(from: datePicker.date)
         case TableItemIdx.classified.rawValue:
-            valueArray[cellSelectedIdx] = Classified.strArray[classifiedSelectedIdx]
+            valueArray[cellSelectedIdx] = ClassifiedDefault.strArray[classifiedSelectedIdx]
         default:
             print("?? cellSelectedIdx = \(cellSelectedIdx)")
         }
@@ -264,7 +264,7 @@ extension ItemViewController: UITableViewDataSource, UITableViewDelegate {
                 
                 dialogTitle.text = "Pick A Classified"
                 let currentClassified = String(describing: valueArray[indexPath.row])
-                for (idx, obj) in Classified.strArray.enumerated() {
+                for (idx, obj) in ClassifiedDefault.strArray.enumerated() {
                     if obj == currentClassified {
                         classifiedSelectedIdx = idx
                         break
@@ -302,11 +302,11 @@ extension ItemViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     }
     //SETUP: How many items of options?
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return Classified.strArray.count
+        return ClassifiedDefault.strArray.count
     }
     //SETUP: The content of every item.
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return Classified.strArray[row]
+        return ClassifiedDefault.strArray[row]
     }
     //SETUP: Selected a row.
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

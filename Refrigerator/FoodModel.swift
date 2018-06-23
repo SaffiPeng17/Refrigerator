@@ -9,7 +9,7 @@
 import Foundation
 
 
-enum Classified: String {
+enum ClassifiedDefault: String {
     case vegetable = "Vegetable"
     case fruit = "Fruit"
     case meat = "Meat"
@@ -21,7 +21,7 @@ enum Classified: String {
         return [self.vegetable.rawValue, self.fruit.rawValue, self.meat.rawValue, self.dairy.rawValue, self.drink.rawValue, self.delicatessen.rawValue]
     }
 }
-let classifiedStr: ((Classified) -> String) = { classified in
+let classifiedStr: ((ClassifiedDefault) -> String) = { classified in
     return classified.rawValue
 }
 

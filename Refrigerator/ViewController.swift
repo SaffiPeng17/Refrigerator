@@ -20,6 +20,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        prepareData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,6 +39,11 @@ class ViewController: UIViewController {
             }
         }
     }
+
+    func prepareData() {
+        let classified = Coredata.shared.readClassified(fetchLimit: nil, predicate: nil, sortBy: nil)
+        print("How many classified? \(classified.count)")
+    }
 }
 
 //MARK: - UITableViewDelegate, UITableViewDataSource
@@ -53,8 +59,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         cell.fImage.image = UIImage(named: foods[indexPath.row].pic)
         cell.fQuantity.text = foods[indexPath.row].quantity.description
         cell.fPeriod.text = foods[indexPath.row].period
-        cell.accessoryType = foodSelect[indexPath.row] ? .checkmark : .none
-        
+//        cell.accessoryType = foodSelect[indexPath.row] ? .checkmark : .none
+
         return cell
     }
     

@@ -11,12 +11,12 @@
 		04686FAE20D2C44E000F52DD /* FoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04686FAD20D2C44E000F52DD /* FoodModel.swift */; };
 		04C9F3001F15204800E92CC0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C9F2FF1F15204800E92CC0 /* ViewController.swift */; };
 		04C9F3041F1E132200E92CC0 /* ItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C9F3031F1E132200E92CC0 /* ItemViewController.swift */; };
-		04C9F3061F1E4D9500E92CC0 /* FoodItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C9F3051F1E4D9500E92CC0 /* FoodItemViewCell.swift */; };
+		04C9F3061F1E4D9500E92CC0 /* ItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C9F3051F1E4D9500E92CC0 /* ItemViewCell.swift */; };
 		04D6EC3B1F13D7FD003102DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D6EC3A1F13D7FD003102DA /* AppDelegate.swift */; };
 		04D6EC401F13D7FD003102DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04D6EC3E1F13D7FD003102DA /* Main.storyboard */; };
 		04D6EC421F13D7FD003102DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04D6EC411F13D7FD003102DA /* Assets.xcassets */; };
 		04D6EC511F13E2DB003102DA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04D6EC501F13E2DB003102DA /* LaunchScreen.storyboard */; };
-		04D6EC531F140535003102DA /* FoodListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D6EC521F140535003102DA /* FoodListViewCell.swift */; };
+		04D6EC531F140535003102DA /* ListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D6EC521F140535003102DA /* ListViewCell.swift */; };
 		04EC1C3620DE78F700347440 /* Refrigerator.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04EC1C3420DE78F700347440 /* Refrigerator.xcdatamodeld */; };
 		04EC1C3820DE7A6500347440 /* CoredataControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EC1C3720DE7A6500347440 /* CoredataControl.swift */; };
 		DEBDE27920DA306F008FD29C /* UIConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBDE27820DA306F008FD29C /* UIConfig.swift */; };
@@ -27,14 +27,14 @@
 		04686FAD20D2C44E000F52DD /* FoodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodModel.swift; sourceTree = "<group>"; };
 		04C9F2FF1F15204800E92CC0 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		04C9F3031F1E132200E92CC0 /* ItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemViewController.swift; sourceTree = "<group>"; };
-		04C9F3051F1E4D9500E92CC0 /* FoodItemViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodItemViewCell.swift; sourceTree = "<group>"; };
+		04C9F3051F1E4D9500E92CC0 /* ItemViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemViewCell.swift; sourceTree = "<group>"; };
 		04D6EC371F13D7FD003102DA /* Refrigerator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Refrigerator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04D6EC3A1F13D7FD003102DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04D6EC3F1F13D7FD003102DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		04D6EC411F13D7FD003102DA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		04D6EC461F13D7FD003102DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04D6EC501F13E2DB003102DA /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		04D6EC521F140535003102DA /* FoodListViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodListViewCell.swift; sourceTree = "<group>"; };
+		04D6EC521F140535003102DA /* ListViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewCell.swift; sourceTree = "<group>"; };
 		04EC1C3520DE78F700347440 /* Refrigerator.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Refrigerator.xcdatamodel; sourceTree = "<group>"; };
 		04EC1C3720DE7A6500347440 /* CoredataControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoredataControl.swift; sourceTree = "<group>"; };
 		DEBDE27820DA306F008FD29C /* UIConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIConfig.swift; sourceTree = "<group>"; };
@@ -88,8 +88,8 @@
 		DEBDE27620D9F84B008FD29C /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
-				04D6EC521F140535003102DA /* FoodListViewCell.swift */,
-				04C9F3051F1E4D9500E92CC0 /* FoodItemViewCell.swift */,
+				04D6EC521F140535003102DA /* ListViewCell.swift */,
+				04C9F3051F1E4D9500E92CC0 /* ItemViewCell.swift */,
 				04686FAB20D2C0EB000F52DD /* InputViewCell.swift */,
 			);
 			path = TableViewCells;
@@ -178,7 +178,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04C9F3061F1E4D9500E92CC0 /* FoodItemViewCell.swift in Sources */,
+				04C9F3061F1E4D9500E92CC0 /* ItemViewCell.swift in Sources */,
 				04D6EC3B1F13D7FD003102DA /* AppDelegate.swift in Sources */,
 				04C9F3001F15204800E92CC0 /* ViewController.swift in Sources */,
 				04C9F3041F1E132200E92CC0 /* ItemViewController.swift in Sources */,
@@ -187,7 +187,7 @@
 				04686FAC20D2C0EB000F52DD /* InputViewCell.swift in Sources */,
 				DEBDE27920DA306F008FD29C /* UIConfig.swift in Sources */,
 				04686FAE20D2C44E000F52DD /* FoodModel.swift in Sources */,
-				04D6EC531F140535003102DA /* FoodListViewCell.swift in Sources */,
+				04D6EC531F140535003102DA /* ListViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

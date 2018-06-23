@@ -1,17 +1,19 @@
 //
-//  FoodItemViewCell.swift
+//  ListViewCell.swift
 //  Refrigerator
 //
-//  Created by Saffi on 18/07/2017.
+//  Created by Saffi on 11/07/2017.
 //  Copyright © 2017 Saffi. All rights reserved.
 //
 
 import UIKit
 
-class FoodItemViewCell: UITableViewCell {
-
-    @IBOutlet var title: UILabel!
-    @IBOutlet var content: UILabel!
+class ListViewCell: UITableViewCell {
+    
+    @IBOutlet weak var fImage: UIImageView!
+    @IBOutlet weak var fName: UILabel!
+    @IBOutlet weak var fQuantity: UILabel!
+    @IBOutlet weak var fPeriod: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

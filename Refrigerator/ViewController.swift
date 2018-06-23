@@ -34,7 +34,10 @@ class ViewController: UIViewController {
         if segue.identifier == "showFoodImage" {
             if let idxPath = foodListTableView.indexPathForSelectedRow {
                 let destController = segue.destination as! ItemViewController
-                destController.selectedIdx = idxPath.row
+                let key = classifiedArray[idxPath.section]
+                let data = foodDict[key]![idxPath.row]
+
+                destController.fooddata = data
                 destController.attribureEditMode = false
             }
         }
@@ -48,19 +51,30 @@ class ViewController: UIViewController {
 
 //MARK: - UITableViewDelegate, UITableViewDataSource
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return classifiedArray.count
+    }
+
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return Array(foodDict.keys)[section]
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return foods.count
+        return Array(foodDict.values)[section].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "foodlistcell", for: indexPath) as! FoodListViewCell
-        //Setup cell
-        cell.fName.text = foods[indexPath.row].name
-        cell.fImage.image = UIImage(named: foods[indexPath.row].pic)
-        cell.fQuantity.text = foods[indexPath.row].quantity.description
-        cell.fPeriod.text = foods[indexPath.row].period
-//        cell.accessoryType = foodSelect[indexPath.row] ? .checkmark : .none
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "listcell", for: indexPath) as! ListViewCell
+        if foodDict.count > 0 {
+            let key = classifiedArray[indexPath.section]
+            let data = foodDict[key]![indexPath.row]
+            //Setup cell
+            cell.fName.text = data.name
+            cell.fImage.image = data.image
+            cell.fQuantity.text = data.quantity?.description
+            cell.fPeriod.text = data.vaildDate
+    //        cell.accessoryType = foodSelect[indexPath.row] ? .checkmark : .none
+        }
         return cell
     }
     

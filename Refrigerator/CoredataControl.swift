@@ -10,12 +10,12 @@ import UIKit
 import CoreData
 
 
-class RecordsObj: NSManagedObject {
+class RecordObj: NSManagedObject {
     var id: Int32?
     var name: String!
     var classified: String!
     var quantity: Double?
-    var vaildDate: Date!
+    var vaildDate: String!
     var image: UIImage?
 }
 
@@ -42,14 +42,14 @@ class Coredata {
     }
 
     //MARK: - Create
-    func createNewRecords(record: RecordsObj) -> Bool {
+    func createNewRecords(record: RecordObj) -> Bool {
         let recordCount = readRecord(fetchLimit: nil, predicate: nil, sortBy: nil).count
         let enRecords = NSEntityDescription.entity(forEntityName: "Records", in: context)!
         enRecords.setValuesForKeys(["id": recordCount,
                                     "name": record.name,
                                     "classified": record.classified,
                                     "quantity": record.quantity as Any,
-                                    "vaildPeriod": record.vaildDate,
+                                    "vaildDate": record.vaildDate,
                                     "image": record.image as Any])
         return saveContext()
     }
@@ -57,14 +57,14 @@ class Coredata {
         let classifiedCount = readClassified(fetchLimit: nil, predicate: nil, sortBy: nil).count
         let enClassified = NSEntityDescription.entity(forEntityName: "Classified", in: context)!
         enClassified.setValuesForKeys(["id": classifiedCount,
-                                       "classname": classified.name])
+                                       "name": classified.name])
         return saveContext()
     }
 
     //MARK: - Read
-    func readRecord(fetchLimit: Int?, predicate: NSPredicate?, sortBy: [NSSortDescriptor]?) -> [RecordsObj] {
-        var result = [RecordsObj]()
-        let request = NSFetchRequest<RecordsObj>(entityName: "Records")
+    func readRecord(fetchLimit: Int?, predicate: NSPredicate?, sortBy: [NSSortDescriptor]?) -> [RecordObj] {
+        var result = [RecordObj]()
+        let request = NSFetchRequest<RecordObj>(entityName: "Records")
         if fetchLimit != nil {
             request.fetchLimit = fetchLimit!
         }

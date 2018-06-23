@@ -52,8 +52,8 @@ class ItemViewController: UIViewController {
     @IBOutlet weak var classifiedPicker: UIPickerView!
     @IBOutlet weak var doneButton: UIButton!
     
-    
-    var selectedIdx = 0 //decide the index data for show
+    var fooddata = RecordObj()
+//    var selected: (section: Int, row: Int) = (0, 0) //decide the index data for show
     var cellSelectedIdx = 0
     var classifiedSelectedIdx = 0
     var titleArray = TableItemIdx.dispItems
@@ -82,7 +82,8 @@ class ItemViewController: UIViewController {
         super.viewDidLoad()
 
         isEditMode = attribureEditMode
-        nameTextField.text = foods[selectedIdx].name
+
+        nameTextField.text = fooddata.name
         nameTextField.delegate = self
         
         dialogView.layer.cornerRadius = 15
@@ -143,9 +144,9 @@ class ItemViewController: UIViewController {
     func fetchFoodData(dataType: FoodDataType) {
         switch dataType {
         case .image:
-            foodImage.image = UIImage(named: foods[selectedIdx].pic)
+            foodImage.image = fooddata.image
         case .tabledata:
-            valueArray = [foods[selectedIdx].quantity.description, foods[selectedIdx].period, foods[selectedIdx].classified]
+            valueArray = [fooddata.quantity as Any, fooddata.vaildDate, fooddata.classified]
         }
     }
 
@@ -225,14 +226,14 @@ extension ItemViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.input.delegate = self
                 return cell
             default:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "fooditemcell", for: indexPath) as! FoodItemViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "itemcell", for: indexPath) as! ItemViewCell
                 cell.title.text = titleArray[indexPath.row]
                 cell.content.text = String(describing: valueArray[indexPath.row])
                 cell.content.textColor = UIColor.editBlue
                 return cell
             }
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "fooditemcell", for: indexPath) as! FoodItemViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "itemcell", for: indexPath) as! ItemViewCell
             cell.title.text = titleArray[indexPath.row]
             cell.content.text = String(describing: valueArray[indexPath.row])
             cell.content.textColor = UIColor.black

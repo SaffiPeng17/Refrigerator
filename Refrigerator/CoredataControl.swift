@@ -10,25 +10,12 @@ import UIKit
 import CoreData
 
 
-class RecordObj: NSManagedObject {
-    var id: Int32?
-    var name: String!
-    var classified: String!
-    var quantity: Double?
-    var vaildDate: String!
-    var image: UIImage?
-}
-
-class ClassifiedObj: NSManagedObject {
-    var id: Int32?
-    var name: String!
-}
+let appDelegate = UIApplication.shared.delegate as! AppDelegate
+let context = appDelegate.persistentContainer.viewContext
 
 class Coredata {
 
     static let shared = Coredata()
-
-    let context = AppDelegate.shared.persistentContainer.viewContext
 
     //MARK: - Common Function
     func saveContext() -> Bool {
@@ -42,29 +29,29 @@ class Coredata {
     }
 
     //MARK: - Create
-    func createNewRecords(record: RecordObj) -> Bool {
+    func createNewRecords(record: Record) -> Bool {
         let recordCount = readRecord(fetchLimit: nil, predicate: nil, sortBy: nil).count
         let enRecords = NSEntityDescription.entity(forEntityName: "Records", in: context)!
         enRecords.setValuesForKeys(["id": recordCount,
-                                    "name": record.name,
-                                    "classified": record.classified,
+                                    "name": record.name as Any,
+                                    "classified": record.classified as Any,
                                     "quantity": record.quantity as Any,
-                                    "vaildDate": record.vaildDate,
+                                    "vaildDate": record.validdate as Any,
                                     "image": record.image as Any])
         return saveContext()
     }
-    func createNewClassified(classified: ClassifiedObj) -> Bool {
+    func createNewClassified(classified: Classified) -> Bool {
         let classifiedCount = readClassified(fetchLimit: nil, predicate: nil, sortBy: nil).count
         let enClassified = NSEntityDescription.entity(forEntityName: "Classified", in: context)!
         enClassified.setValuesForKeys(["id": classifiedCount,
-                                       "name": classified.name])
+                                       "name": classified.name as Any])
         return saveContext()
     }
 
     //MARK: - Read
-    func readRecord(fetchLimit: Int?, predicate: NSPredicate?, sortBy: [NSSortDescriptor]?) -> [RecordObj] {
-        var result = [RecordObj]()
-        let request = NSFetchRequest<RecordObj>(entityName: "Records")
+    func readRecord(fetchLimit: Int?, predicate: NSPredicate?, sortBy: [NSSortDescriptor]?) -> [Record] {
+        var result = [Record]()
+        let request = NSFetchRequest<Record>(entityName: "Record")
         if fetchLimit != nil {
             request.fetchLimit = fetchLimit!
         }
@@ -78,9 +65,9 @@ class Coredata {
         }
         return result
     }
-    func readClassified(fetchLimit: Int?, predicate: NSPredicate?, sortBy: [NSSortDescriptor]?) -> [ClassifiedObj] {
-        var result = [ClassifiedObj]()
-        let request = NSFetchRequest<ClassifiedObj>(entityName: "Classified")
+    func readClassified(fetchLimit: Int?, predicate: NSPredicate?, sortBy: [NSSortDescriptor]?) -> [Classified] {
+        var result = [Classified]()
+        let request = NSFetchRequest<Classified>(entityName: "Classified")
         if fetchLimit != nil {
             request.fetchLimit = fetchLimit!
         }

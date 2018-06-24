@@ -47,24 +47,29 @@ var classifiedArray: [String] {
     let cusClassifieds = Coredata.shared.readClassified(fetchLimit: nil, predicate: nil, sortBy: nil)
     if cusClassifieds.count > 0 {
         for cusClassified in cusClassifieds {
-            array.append(cusClassified.name)
+            array.append(cusClassified.name!)
         }
     }
+    print("array = \(array)")
     return array
 }
 
-var foodDict: [String: [RecordObj]] {
-    var dict = [String: [RecordObj]]()
+var foodDict: [String: [Record]] {
+    var dict = [String: [Record]]()
     let records = Coredata.shared.readRecord(fetchLimit: nil, predicate: nil, sortBy: nil)
     if records.count > 0 {
         for classified in classifiedArray {
-            var array = [RecordObj]()
+            var array = [Record]()
             for record in records {
                 if classified == record.classified {
                     array.append(record)
                 }
             }
-            dict = [classified: array]
+            dict.updateValue(array, forKey: classified)
+        }
+    } else {
+        for classified in classifiedArray {
+            dict.updateValue([Record](), forKey: classified)
         }
     }
     return dict

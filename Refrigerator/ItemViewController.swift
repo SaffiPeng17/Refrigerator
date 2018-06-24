@@ -52,8 +52,7 @@ class ItemViewController: UIViewController {
     @IBOutlet weak var classifiedPicker: UIPickerView!
     @IBOutlet weak var doneButton: UIButton!
     
-    var fooddata = RecordObj()
-//    var selected: (section: Int, row: Int) = (0, 0) //decide the index data for show
+    var fooddata: Record?
     var cellSelectedIdx = 0
     var classifiedSelectedIdx = 0
     var titleArray = TableItemIdx.dispItems
@@ -83,7 +82,7 @@ class ItemViewController: UIViewController {
 
         isEditMode = attribureEditMode
 
-        nameTextField.text = fooddata.name
+        nameTextField.text = fooddata?.name
         nameTextField.delegate = self
         
         dialogView.layer.cornerRadius = 15
@@ -144,9 +143,11 @@ class ItemViewController: UIViewController {
     func fetchFoodData(dataType: FoodDataType) {
         switch dataType {
         case .image:
-            foodImage.image = fooddata.image
+            foodImage.image = UIImage(data: (fooddata?.image!)!)
         case .tabledata:
-            valueArray = [fooddata.quantity as Any, fooddata.vaildDate, fooddata.classified]
+            valueArray = [fooddata?.quantity as Any,
+                          fooddata?.validdate as Any,
+                          fooddata?.classified as Any]
         }
     }
 

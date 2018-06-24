@@ -10,7 +10,7 @@
         <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="quantity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="validDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="validdate" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
         <element name="Record" positionX="-63" positionY="-18" width="128" height="135"/>

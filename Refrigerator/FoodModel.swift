@@ -50,7 +50,6 @@ var classifiedArray: [String] {
             array.append(cusClassified.name!)
         }
     }
-    print("array = \(array)")
     return array
 }
 

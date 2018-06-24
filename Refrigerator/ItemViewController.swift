@@ -20,10 +20,10 @@ enum TableItemIdx: Int {
     case classified
     
     static var dispItems: [String] {
-        return ["quantity", "vaild date"]
+        return ["quantity", "valid date"]
     }
     static var editItems: [String] {
-        return ["quantity", "vaild date", "classified"]
+        return ["quantity", "valid date", "classified"]
     }
 }
 
@@ -52,7 +52,7 @@ class ItemViewController: UIViewController {
     @IBOutlet weak var classifiedPicker: UIPickerView!
     @IBOutlet weak var doneButton: UIButton!
     
-    var fooddata: Record?
+    var fooddata: RecordObj?
     var cellSelectedIdx = 0
     var classifiedSelectedIdx = 0
     var titleArray = TableItemIdx.dispItems
@@ -143,12 +143,47 @@ class ItemViewController: UIViewController {
     func fetchFoodData(dataType: FoodDataType) {
         switch dataType {
         case .image:
-            foodImage.image = UIImage(data: (fooddata?.image!)!)
+            foodImage.image = (fooddata != nil) ? UIImage(data: (fooddata?.image!)!) : nil
         case .tabledata:
-            valueArray = [fooddata?.quantity as Any,
-                          fooddata?.validdate as Any,
-                          fooddata?.classified as Any]
+            if fooddata != nil {
+                valueArray = [fooddata?.quantity as Any,
+                              fooddata?.validdate as Any,
+                              fooddata?.classified as Any]
+            } else {
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd"
+                let date = formatter.string(from: Date())
+                valueArray = [0, date, classifiedArray[0]]
+            }
         }
+    }
+
+    //MARK: - Verify data before save
+    func verifyChanged() -> (result: Bool, message: String) {
+        var isVerifySuccess = true
+        var message = ""
+        //verify: Name
+        if nameTextField.text == nil {
+            isVerifySuccess = false
+            message = VerifyError.veNameEmpty.message
+        } else {
+            //verify: Quantity
+            let quantity = Int(self.valueArray[TableItemIdx.quantity.rawValue] as! String)
+            if quantity == 0 {
+                isVerifySuccess = false
+                message = VerifyError.veQuantityZero.message
+            } else {
+                //verify: Valid Date
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd"
+                let date = formatter.date(from: valueArray[TableItemIdx.vailddate.rawValue] as! String)!
+                if date <= Date() {
+                    isVerifySuccess = false
+                    message = VerifyError.veValidDateError.message
+                }
+            }
+        }
+        return (isVerifySuccess, message)
     }
 
     //MARK: - Button events
@@ -158,7 +193,29 @@ class ItemViewController: UIViewController {
     }
     
     @IBAction func closeButtonClicked(_ sender: Any) {
-        isEditMode = false
+        let message = "Are you sure to save the changes?"
+        let alert = UIAlertController(title: "Notification", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+            let verifyResult = self.verifyChanged()
+            if verifyResult.result {
+                let record = RecordObj()
+                record.name = self.nameTextField.text!
+                record.quantity = Int(self.valueArray[TableItemIdx.quantity.rawValue] as! String)!
+                record.validdate = self.valueArray[TableItemIdx.vailddate.rawValue] as! String
+                record.classified = self.valueArray[TableItemIdx.classified.rawValue] as! String
+                record.image = UIImagePNGRepresentation(self.foodImage.image!)
+                if Coredata.shared.createNewRecords(record: record) {
+                    self.isEditMode = true
+                }
+            } else {
+                let alert = UIAlertController(title: "Notification", message: verifyResult.message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true)
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+        present(alert, animated: true)
+
         detailTableView.reloadData()
     }
 
@@ -203,7 +260,7 @@ class ItemViewController: UIViewController {
             formatter.dateFormat = "yyyy-MM-dd"
             valueArray[cellSelectedIdx] = formatter.string(from: datePicker.date)
         case TableItemIdx.classified.rawValue:
-            valueArray[cellSelectedIdx] = ClassifiedDefault.strArray[classifiedSelectedIdx]
+            valueArray[cellSelectedIdx] = classifiedArray[classifiedSelectedIdx]
         default:
             print("?? cellSelectedIdx = \(cellSelectedIdx)")
         }
@@ -266,7 +323,7 @@ extension ItemViewController: UITableViewDataSource, UITableViewDelegate {
                 
                 dialogTitle.text = "Pick A Classified"
                 let currentClassified = String(describing: valueArray[indexPath.row])
-                for (idx, obj) in ClassifiedDefault.strArray.enumerated() {
+                for (idx, obj) in classifiedArray.enumerated() {
                     if obj == currentClassified {
                         classifiedSelectedIdx = idx
                         break
@@ -304,11 +361,11 @@ extension ItemViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     }
     //SETUP: How many items of options?
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return ClassifiedDefault.strArray.count
+        return classifiedArray.count
     }
     //SETUP: The content of every item.
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return ClassifiedDefault.strArray[row]
+        return classifiedArray[row]
     }
     //SETUP: Selected a row.
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -320,6 +377,10 @@ extension ItemViewController: UIPickerViewDataSource, UIPickerViewDelegate {
 extension ItemViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         valueArray[0] = textField.text!
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
 

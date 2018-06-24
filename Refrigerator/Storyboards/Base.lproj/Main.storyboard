@@ -92,7 +92,7 @@
                                             <outlet property="fName" destination="GVE-vq-SZL" id="WcH-RF-A9M"/>
                                             <outlet property="fPeriod" destination="sgn-1Q-9zk" id="cTx-g0-HvY"/>
                                             <outlet property="fQuantity" destination="mu7-f1-oNZ" id="P0X-Mj-KXm"/>
-                                            <segue destination="aie-zJ-FpJ" kind="show" identifier="showFoodImage" id="LLN-vP-vEY"/>
+                                            <segue destination="aie-zJ-FpJ" kind="show" identifier="showDetail" id="LLN-vP-vEY"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -120,6 +120,11 @@
                                 <segment title="All"/>
                             </segments>
                         </segmentedControl>
+                        <barButtonItem key="rightBarButtonItem" title="＋" id="fzS-zx-YqP">
+                            <connections>
+                                <segue destination="aie-zJ-FpJ" kind="show" identifier="showAddDetail" id="KKx-7U-yif"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="foodListTableView" destination="2Vn-ZR-e7T" id="P9Z-UY-oye"/>
@@ -495,4 +500,7 @@
         <image name="gallery_normal" width="128" height="128"/>
         <image name="gallery_pressed" width="128" height="128"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="KKx-7U-yif"/>
+    </inferredMetricsTieBreakers>
 </document>

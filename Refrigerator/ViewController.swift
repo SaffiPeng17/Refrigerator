@@ -20,7 +20,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        prepareData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,21 +30,24 @@ class ViewController: UIViewController {
     // MARK: - Navigation
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showFoodImage" {
+        if segue.identifier == "showDetail" {
             if let idxPath = foodListTableView.indexPathForSelectedRow {
                 let destController = segue.destination as! ItemViewController
                 let key = classifiedArray[idxPath.section]
                 let data = (foodDict.count > 0) ? foodDict[key]![idxPath.row] : nil
 
-                destController.fooddata = data
+                destController.fooddata?.name = (data!.name)!
+                destController.fooddata?.quantity = Int(data!.quantity)
+                destController.fooddata?.validdate = (data!.validdate)!
+                destController.fooddata?.classified = (data!.classified)!
+                destController.fooddata?.image = (data!.image)!
                 destController.attribureEditMode = false
             }
+        } else if segue.identifier == "showAddDetail" {
+            let destController = segue.destination as! ItemViewController
+            destController.fooddata = nil
+            destController.attribureEditMode = true
         }
-    }
-
-    func prepareData() {
-        let classified = Coredata.shared.readClassified(fetchLimit: nil, predicate: nil, sortBy: nil)
-        print("How many classified? \(classified.count)")
     }
 }
 
@@ -53,23 +55,23 @@ class ViewController: UIViewController {
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     //SETUP: How many sections in Table?
     func numberOfSections(in tableView: UITableView) -> Int {
-        print("numberOfSections")
+//        print("numberOfSections")
         return classifiedArray.count
     }
     //SETUP: What is the header of every sections?
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        print("titleForHeaderInSection")
-        print("foodDict.count = \(String(describing: foodDict.count))")
+//        print("titleForHeaderInSection")
+//        print("foodDict.count = \(String(describing: foodDict.count))")
         guard (foodDict.count) > 0 else {
-            print("nil")
+//            print("nil")
             return nil
         }
-        print("not nil")
+//        print("not nil")
         return Array(foodDict.keys)[section]
     }
     //SETUP: How many rows in every section?
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("numberOfRowsInSection")
+//        print("numberOfRowsInSection")
         guard foodDict.count > 0 else {
             return 0
         }
@@ -77,7 +79,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     //SETUP: The view of every cell.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("cellForRowAt")
+//        print("cellForRowAt")
         let cell = tableView.dequeueReusableCell(withIdentifier: "listcell", for: indexPath) as! ListViewCell
         if foodDict.count > 0 {
             let key = classifiedArray[indexPath.section]
@@ -93,12 +95,12 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     //SETUP: Can the rows be edited?
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        print("canEditRowAt")
+//        print("canEditRowAt")
         return true
     }
     //SETUP: Define the type of Edit.
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        print("editingStyle")
+//        print("editingStyle")
         if editingStyle == .delete {
             let key = classifiedArray[indexPath.section]
             let data = foodDict[key]![indexPath.row]

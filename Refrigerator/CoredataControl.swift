@@ -10,6 +10,18 @@ import UIKit
 import CoreData
 
 
+class RecordObj {
+    var name: String = ""
+    var quantity: Int = 0
+    var validdate: String = ""
+    var classified: String = ""
+    var image: Data?
+}
+
+class ClassifiedObj {
+    var name: String = ""
+}
+
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
 let context = appDelegate.persistentContainer.viewContext
 
@@ -19,8 +31,10 @@ class Coredata {
 
     //MARK: - Common Function
     func saveContext() -> Bool {
+        print("saveContext")
         do {
             try context.save()
+            print("save success")
             return true
         } catch let error as NSError {
             print("Context Save Fail! \(error), \(error.userInfo)")
@@ -29,10 +43,11 @@ class Coredata {
     }
 
     //MARK: - Create
-    func createNewRecords(record: Record) -> Bool {
+    func createNewRecords(record: RecordObj) -> Bool {
+        print("createNewRecords")
         let recordCount = readRecord(fetchLimit: nil, predicate: nil, sortBy: nil).count
-        let enRecords = NSEntityDescription.entity(forEntityName: "Records", in: context)!
-        enRecords.setValuesForKeys(["id": recordCount,
+        let enRecords = NSEntityDescription.entity(forEntityName: "Record", in: context)!
+        enRecords.setValuesForKeys(["id": (recordCount == 0 ? 1 : recordCount),
                                     "name": record.name as Any,
                                     "classified": record.classified as Any,
                                     "quantity": record.quantity as Any,
@@ -40,7 +55,7 @@ class Coredata {
                                     "image": record.image as Any])
         return saveContext()
     }
-    func createNewClassified(classified: Classified) -> Bool {
+    func createNewClassified(classified: ClassifiedObj) -> Bool {
         let classifiedCount = readClassified(fetchLimit: nil, predicate: nil, sortBy: nil).count
         let enClassified = NSEntityDescription.entity(forEntityName: "Classified", in: context)!
         enClassified.setValuesForKeys(["id": classifiedCount,
@@ -50,6 +65,7 @@ class Coredata {
 
     //MARK: - Read
     func readRecord(fetchLimit: Int?, predicate: NSPredicate?, sortBy: [NSSortDescriptor]?) -> [Record] {
+        print("readRecord")
         var result = [Record]()
         let request = NSFetchRequest<Record>(entityName: "Record")
         if fetchLimit != nil {
@@ -60,6 +76,7 @@ class Coredata {
 
         do {
             result = try context.fetch(request)
+            print("result = \(result)")
         } catch let error as NSError {
             print("Fetch Record data Fail! \(error), \(error.userInfo)")
         }

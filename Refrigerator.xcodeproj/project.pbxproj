@@ -19,6 +19,7 @@
 		04D6EC531F140535003102DA /* ListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D6EC521F140535003102DA /* ListViewCell.swift */; };
 		04EC1C3620DE78F700347440 /* Refrigerator.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04EC1C3420DE78F700347440 /* Refrigerator.xcdatamodeld */; };
 		04EC1C3820DE7A6500347440 /* CoredataControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EC1C3720DE7A6500347440 /* CoredataControl.swift */; };
+		04EC1C5020DFDB7C00347440 /* ErrorHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EC1C4F20DFDB7C00347440 /* ErrorHandle.swift */; };
 		DEBDE27920DA306F008FD29C /* UIConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBDE27820DA306F008FD29C /* UIConfig.swift */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +38,7 @@
 		04D6EC521F140535003102DA /* ListViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewCell.swift; sourceTree = "<group>"; };
 		04EC1C3520DE78F700347440 /* Refrigerator.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Refrigerator.xcdatamodel; sourceTree = "<group>"; };
 		04EC1C3720DE7A6500347440 /* CoredataControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoredataControl.swift; sourceTree = "<group>"; };
+		04EC1C4F20DFDB7C00347440 /* ErrorHandle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandle.swift; sourceTree = "<group>"; };
 		DEBDE27820DA306F008FD29C /* UIConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIConfig.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -77,6 +79,7 @@
 				DEBDE27820DA306F008FD29C /* UIConfig.swift */,
 				04686FAD20D2C44E000F52DD /* FoodModel.swift */,
 				04EC1C3720DE7A6500347440 /* CoredataControl.swift */,
+				04EC1C4F20DFDB7C00347440 /* ErrorHandle.swift */,
 				DEBDE27620D9F84B008FD29C /* TableViewCells */,
 				04D6EC411F13D7FD003102DA /* Assets.xcassets */,
 				04D6EC461F13D7FD003102DA /* Info.plist */,
@@ -183,6 +186,7 @@
 				04C9F3001F15204800E92CC0 /* ViewController.swift in Sources */,
 				04C9F3041F1E132200E92CC0 /* ItemViewController.swift in Sources */,
 				04EC1C3820DE7A6500347440 /* CoredataControl.swift in Sources */,
+				04EC1C5020DFDB7C00347440 /* ErrorHandle.swift in Sources */,
 				04EC1C3620DE78F700347440 /* Refrigerator.xcdatamodeld in Sources */,
 				04686FAC20D2C0EB000F52DD /* InputViewCell.swift in Sources */,
 				DEBDE27920DA306F008FD29C /* UIConfig.swift in Sources */,

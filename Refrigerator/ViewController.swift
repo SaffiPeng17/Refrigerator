@@ -35,7 +35,9 @@ class ViewController: UIViewController {
                             array.append(record)
                         }
                     }
-                    dict.updateValue(array, forKey: classified)
+                    if array.count != 0 {
+                        dict.updateValue(array, forKey: classified)
+                    }
                 }
             } else {
                 for classified in classifiedArray {
@@ -64,7 +66,7 @@ class ViewController: UIViewController {
         if segue.identifier == "showDetail" {
             if let idxPath = foodListTableView.indexPathForSelectedRow {
                 let destController = segue.destination as! ItemViewController
-                let key = classifiedArray[idxPath.section]
+                let key = Array(foodDict.keys)[idxPath.section]
                 let data = (foodDict.count > 0) ? foodDict[key]![idxPath.row] : nil
 
                 destController.fooddata = data
@@ -82,13 +84,15 @@ class ViewController: UIViewController {
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     //SETUP: How many sections in Table?
     func numberOfSections(in tableView: UITableView) -> Int {
-        return classifiedArray.count
+        print("numberOfSections = \(foodDict.count)")
+        return foodDict.count//classifiedArray.count
     }
     //SETUP: What is the header of every sections?
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         guard (foodDict.count) > 0 else {
             return nil
         }
+        print("titleForHeaderInSection = \(Array(foodDict.keys)[section])")
         return Array(foodDict.keys)[section]
     }
     //SETUP: How many rows in every section?
@@ -96,13 +100,14 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         guard foodDict.count > 0 else {
             return 0
         }
+        print("numberOfRowsInSection = \(Array(foodDict.values)[section].count)")
         return Array(foodDict.values)[section].count
     }
     //SETUP: The view of every cell.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "listcell", for: indexPath) as! ListViewCell
         if foodDict.count > 0 {
-            let key = classifiedArray[indexPath.section]
+            let key = Array(foodDict.keys)[indexPath.section]
             let data = foodDict[key]![indexPath.row]
             //Setup cell
             cell.fName.text = data.name

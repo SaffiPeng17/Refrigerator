@@ -28,6 +28,11 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="mxC-Lc-NRm">
+                                    <rect key="frame" x="0.0" y="108" width="375" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="listcell" rowHeight="80" id="qFa-yf-Kjq" customClass="ListViewCell" customModule="Refrigerator" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="80"/>
@@ -119,10 +124,11 @@
                                 <segment title="Period"/>
                                 <segment title="All"/>
                             </segments>
+                            <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </segmentedControl>
-                        <barButtonItem key="rightBarButtonItem" title="＋" id="fzS-zx-YqP">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="add" landscapeImage="add" width="29" id="dHe-04-VWG">
                             <connections>
-                                <segue destination="aie-zJ-FpJ" kind="show" identifier="showAddDetail" id="KKx-7U-yif"/>
+                                <segue destination="aie-zJ-FpJ" kind="show" identifier="showFoodEdit" id="fNk-DM-dX6"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -491,6 +497,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="add" width="16" height="16"/>
         <image name="camera_normal" width="128" height="128"/>
         <image name="camera_pressed" width="128" height="128"/>
         <image name="close_normal" width="128" height="128"/>
@@ -501,6 +508,6 @@
         <image name="gallery_pressed" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="KKx-7U-yif"/>
+        <segue reference="fNk-DM-dX6"/>
     </inferredMetricsTieBreakers>
 </document>

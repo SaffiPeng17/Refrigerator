@@ -12,7 +12,7 @@ import CoreData
 
 class RecordData {
     var name: String = ""
-    var quantity: Int16 = 0
+    var quantity: Int = 0
     var validdate: String = ""
     var classified: String = ""
     var image: Data?
@@ -33,6 +33,7 @@ class Coredata {
     func saveContext() -> Bool {
         do {
             try context.save()
+            prepareData()
             return true
         } catch let error as NSError {
             print("Context Save Fail! \(error), \(error.userInfo)")

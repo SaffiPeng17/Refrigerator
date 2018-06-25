@@ -15,38 +15,11 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var foodListTableView: UITableView! {
         didSet {
-            //Update ClassifiedArray
-            var array = ClassifiedDefault.strArray
-            let cusClassifieds = Coredata.shared.readClassified(fetchLimit: nil, predicate: nil, sortBy: nil)
-            if cusClassifieds.count > 0 {
-                for cusClassified in cusClassifieds {
-                    array.append(cusClassified.name!)
-                }
-            }
-            classifiedArray = array
-            //Update FoodDict
-            var dict = [String: [Record]]()
-            let records = Coredata.shared.readRecord(fetchLimit: nil, predicate: nil, sortBy: nil)
-            if records.count > 0 {
-                for classified in classifiedArray {
-                    var array = [Record]()
-                    for record in records {
-                        if classified == record.classified {
-                            array.append(record)
-                        }
-                    }
-                    if array.count != 0 {
-                        dict.updateValue(array, forKey: classified)
-                    }
-                }
-            } else {
-                for classified in classifiedArray {
-                    dict.updateValue([Record](), forKey: classified)
-                }
-            }
-            foodDict = dict
+            prepareData()
         }
     }
+    
+    var isNeedtoReloadTable = false
     
     //Funcs
     override func viewDidLoad() {
@@ -58,6 +31,15 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        if isNeedtoReloadTable {
+            foodListTableView.reloadData()
+            isNeedtoReloadTable = false
+        }
     }
 
     // MARK: - Navigation
@@ -72,7 +54,7 @@ class ViewController: UIViewController {
                 destController.fooddata = data
                 destController.attribureEditMode = false
             }
-        } else if segue.identifier == "showAddDetail" {
+        } else if segue.identifier == "showFoodEdit" {
             let destController = segue.destination as! ItemViewController
             destController.fooddata = nil
             destController.attribureEditMode = true
@@ -84,7 +66,6 @@ class ViewController: UIViewController {
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     //SETUP: How many sections in Table?
     func numberOfSections(in tableView: UITableView) -> Int {
-        print("numberOfSections = \(foodDict.count)")
         return foodDict.count//classifiedArray.count
     }
     //SETUP: What is the header of every sections?
@@ -92,7 +73,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         guard (foodDict.count) > 0 else {
             return nil
         }
-        print("titleForHeaderInSection = \(Array(foodDict.keys)[section])")
         return Array(foodDict.keys)[section]
     }
     //SETUP: How many rows in every section?
@@ -100,7 +80,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         guard foodDict.count > 0 else {
             return 0
         }
-        print("numberOfRowsInSection = \(Array(foodDict.values)[section].count)")
         return Array(foodDict.values)[section].count
     }
     //SETUP: The view of every cell.
@@ -125,14 +104,14 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     //SETUP: Define the type of Edit.
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let key = classifiedArray[indexPath.section]
+            let key = Array(foodDict.keys)[indexPath.section]
             let data = foodDict[key]![indexPath.row]
-            let message = "Are you sure to delete \(String(describing: data.name))?"
+            let message = "Are you sure to delete \(data.name!)?"
             let alert = UIAlertController(title: "Notification", message: message, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
                 let predicate = NSPredicate(format: "name == %@", data.name!)
                 let _ = Coredata.shared.deleteRecords(predicate: predicate)
-                tableView.reloadData()
+                self.foodListTableView.reloadData()
             }))
             alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
             present(alert, animated: true)

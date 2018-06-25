@@ -56,7 +56,7 @@ class ItemViewController: UIViewController {
     var cellSelectedIdx = 0
     var classifiedSelectedIdx = 0
     var titleArray = TableItemIdx.dispItems
-    var valueArray = [Any]()
+    var valueArray = [String]()
     var attribureEditMode = false
     var isEditMode: Bool! {
         didSet {
@@ -99,6 +99,11 @@ class ItemViewController: UIViewController {
     //點一下Keyboard以外的地方，會收起鍵盤
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destController = segue.destination as! ViewController
+        destController.isNeedtoReloadTable = true
     }
     
     func addNotifications() {
@@ -146,14 +151,14 @@ class ItemViewController: UIViewController {
             foodImage.image = (fooddata != nil) ? UIImage(data: (fooddata?.image!)!) : nil
         case .tabledata:
             if fooddata != nil {
-                valueArray = [Int(fooddata!.quantity),
-                              String(fooddata!.validdate!),
-                              String(fooddata!.classified!)]
+                valueArray = [String(describing: fooddata!.quantity),
+                              fooddata!.validdate!,
+                              fooddata!.classified!]
             } else {
                 let formatter = DateFormatter()
                 formatter.dateFormat = "yyyy-MM-dd"
                 let date = formatter.string(from: Date())
-                valueArray = [0, date, classifiedArray[0]]
+                valueArray = ["0", date, classifiedArray[0]]
             }
         }
     }
@@ -168,15 +173,15 @@ class ItemViewController: UIViewController {
             message = VerifyError.veNameEmpty.message
         } else {
             //verify: Quantity
-            let quantity = Int(self.valueArray[TableItemIdx.quantity.rawValue] as! String)
-            if quantity == 0 {
+            let quantity = self.valueArray[TableItemIdx.quantity.rawValue]
+            if Int(quantity) == 0 {
                 isVerifySuccess = false
                 message = VerifyError.veQuantityZero.message
             } else {
                 //verify: Valid Date
                 let formatter = DateFormatter()
                 formatter.dateFormat = "yyyy-MM-dd"
-                let date = formatter.date(from: valueArray[TableItemIdx.vailddate.rawValue] as! String)!
+                let date = formatter.date(from: valueArray[TableItemIdx.vailddate.rawValue])!
                 if date <= Date() {
                     isVerifySuccess = false
                     message = VerifyError.veValidDateError.message
@@ -201,12 +206,14 @@ class ItemViewController: UIViewController {
                 if self.fooddata == nil {
                     let record = RecordData()
                     record.name = self.nameTextField.text!
-                    record.quantity = Int16(self.valueArray[TableItemIdx.quantity.rawValue] as! String)!
-                    record.validdate = self.valueArray[TableItemIdx.vailddate.rawValue] as! String
-                    record.classified = self.valueArray[TableItemIdx.classified.rawValue] as! String
+                    record.quantity = Int(self.valueArray[TableItemIdx.quantity.rawValue])!
+                    record.validdate = self.valueArray[TableItemIdx.vailddate.rawValue]
+                    record.classified = self.valueArray[TableItemIdx.classified.rawValue]
+                    print("save image orientation = \(String(describing: self.foodImage.image?.imageOrientation.rawValue))")
                     record.image = UIImagePNGRepresentation(self.foodImage.image!)
                     if Coredata.shared.createNewRecords(record: record) {
-                        self.isEditMode = true
+                        self.isEditMode = false
+                        self.detailTableView.reloadData()
                     }
                 } else {
                     //Update data
@@ -219,6 +226,7 @@ class ItemViewController: UIViewController {
         }))
         alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: { _ in
             self.isEditMode = false
+            self.fetchFoodData(dataType: .tabledata)
             self.detailTableView.reloadData()
         }))
         present(alert, animated: true)
@@ -285,20 +293,20 @@ extension ItemViewController: UITableViewDataSource, UITableViewDelegate {
             case TableItemIdx.quantity.rawValue:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "inputcell", for: indexPath) as! InputViewCell
                 cell.title.text = titleArray[indexPath.row]
-                cell.input.text = String(describing: valueArray[indexPath.row])
+                cell.input.text = valueArray[indexPath.row]
                 cell.input.delegate = self
                 return cell
             default:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "itemcell", for: indexPath) as! ItemViewCell
                 cell.title.text = titleArray[indexPath.row]
-                cell.content.text = String(describing: valueArray[indexPath.row])
+                cell.content.text = valueArray[indexPath.row]
                 cell.content.textColor = UIColor.editBlue
                 return cell
             }
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "itemcell", for: indexPath) as! ItemViewCell
             cell.title.text = titleArray[indexPath.row]
-            cell.content.text = String(describing: valueArray[indexPath.row])
+            cell.content.text = valueArray[indexPath.row]
             cell.content.textColor = UIColor.black
             return cell
         }
@@ -317,7 +325,7 @@ extension ItemViewController: UITableViewDataSource, UITableViewDelegate {
                 dialogTitle.text = "Pick A Date"
                 let formatter = DateFormatter()
                 formatter.dateFormat = "yyyy-MM-dd"
-                let pickerDate = formatter.date(from: String(describing: valueArray[indexPath.row]))!
+                let pickerDate = formatter.date(from: valueArray[indexPath.row])!
                 datePicker.setDate(pickerDate, animated: true)
 
             case TableItemIdx.classified.rawValue:
@@ -327,7 +335,7 @@ extension ItemViewController: UITableViewDataSource, UITableViewDelegate {
                 classifiedPicker.isHidden = false
                 
                 dialogTitle.text = "Pick A Classified"
-                let currentClassified = String(describing: valueArray[indexPath.row])
+                let currentClassified = valueArray[indexPath.row]
                 for (idx, obj) in classifiedArray.enumerated() {
                     if obj == currentClassified {
                         classifiedSelectedIdx = idx
@@ -381,7 +389,9 @@ extension ItemViewController: UIPickerViewDataSource, UIPickerViewDelegate {
 //MARK: - UITextFieldDelegate
 extension ItemViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
-        valueArray[0] = textField.text!
+        if textField != nameTextField {
+            valueArray[0] = textField.text!
+        }
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

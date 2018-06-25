@@ -45,6 +45,41 @@ let classifiedStr: ((ClassifiedDefault) -> String) = { classified in
 var classifiedArray = [String]()
 var foodDict = [String: [Record]]()
 
+func prepareData() {
+    //Update ClassifiedArray
+    var array = ClassifiedDefault.strArray
+    let cusClassifieds = Coredata.shared.readClassified(fetchLimit: nil, predicate: nil, sortBy: nil)
+    if cusClassifieds.count > 0 {
+        for cusClassified in cusClassifieds {
+            array.append(cusClassified.name!)
+        }
+    }
+    classifiedArray = array
+    //Update FoodDict
+    var dict = [String: [Record]]()
+    let records = Coredata.shared.readRecord(fetchLimit: nil, predicate: nil, sortBy: nil)
+    print("records = \(records.count)")
+    if records.count > 0 {
+        for classified in classifiedArray {
+            var array = [Record]()
+            for record in records {
+                if classified == record.classified {
+                    array.append(record)
+                }
+            }
+            if array.count != 0 {
+                dict.updateValue(array, forKey: classified)
+            }
+        }
+    }/* else {
+     for classified in classifiedArray {
+     
+     dict.updateValue([Record](), forKey: classified)
+     }
+     }*/
+    foodDict = dict
+}
+
 //Mock
 //var foods: [Foods] = [
 //    Foods(name: "Onion", period: "2018-8-20", quantity: 3, classified: classifiedStr(.vegetable), pic: "onion.jpg"),

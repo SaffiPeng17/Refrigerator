@@ -72,20 +72,28 @@
 		04D6EC391F13D7FD003102DA /* Refrigerator */ = {
 			isa = PBXGroup;
 			children = (
+				DE164D6E20E0DFA500D4E47B /* Utility */,
 				DEBDE27720D9F924008FD29C /* Storyboards */,
 				04D6EC3A1F13D7FD003102DA /* AppDelegate.swift */,
 				04C9F2FF1F15204800E92CC0 /* ViewController.swift */,
 				04C9F3031F1E132200E92CC0 /* ItemViewController.swift */,
-				DEBDE27820DA306F008FD29C /* UIConfig.swift */,
-				04686FAD20D2C44E000F52DD /* FoodModel.swift */,
-				04EC1C3720DE7A6500347440 /* CoredataControl.swift */,
-				04EC1C4F20DFDB7C00347440 /* ErrorHandle.swift */,
 				DEBDE27620D9F84B008FD29C /* TableViewCells */,
 				04D6EC411F13D7FD003102DA /* Assets.xcassets */,
 				04D6EC461F13D7FD003102DA /* Info.plist */,
 				04EC1C3420DE78F700347440 /* Refrigerator.xcdatamodeld */,
 			);
 			path = Refrigerator;
+			sourceTree = "<group>";
+		};
+		DE164D6E20E0DFA500D4E47B /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				DEBDE27820DA306F008FD29C /* UIConfig.swift */,
+				04686FAD20D2C44E000F52DD /* FoodModel.swift */,
+				04EC1C3720DE7A6500347440 /* CoredataControl.swift */,
+				04EC1C4F20DFDB7C00347440 /* ErrorHandle.swift */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 		DEBDE27620D9F84B008FD29C /* TableViewCells */ = {

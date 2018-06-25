@@ -101,11 +101,6 @@ class ItemViewController: UIViewController {
         view.endEditing(true)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destController = segue.destination as! ViewController
-        destController.isNeedtoReloadTable = true
-    }
-    
     func addNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(notifyKeyboardChangeFrame(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
     }
@@ -203,20 +198,21 @@ class ItemViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
             let verifyResult = self.verifyChanged()
             if verifyResult.result {
-                if self.fooddata == nil {
-                    let record = RecordData()
-                    record.name = self.nameTextField.text!
-                    record.quantity = Int(self.valueArray[TableItemIdx.quantity.rawValue])!
-                    record.validdate = self.valueArray[TableItemIdx.vailddate.rawValue]
-                    record.classified = self.valueArray[TableItemIdx.classified.rawValue]
-                    print("save image orientation = \(String(describing: self.foodImage.image?.imageOrientation.rawValue))")
-                    record.image = UIImagePNGRepresentation(self.foodImage.image!)
-                    if Coredata.shared.createNewRecords(record: record) {
-                        self.isEditMode = false
-                        self.detailTableView.reloadData()
-                    }
-                } else {
-                    //Update data
+                //Prepare Record data for saving
+                let record = RecordData()
+                record.name = self.nameTextField.text!
+                record.quantity = Int(self.valueArray[TableItemIdx.quantity.rawValue])!
+                record.validdate = self.valueArray[TableItemIdx.vailddate.rawValue]
+                record.classified = self.valueArray[TableItemIdx.classified.rawValue]
+                print("save image orientation = \(String(describing: self.foodImage.image?.imageOrientation.rawValue))")
+                record.image = UIImagePNGRepresentation(self.foodImage.image!)
+                //Update Core Data
+                let predicate = NSPredicate(format: "name == %@", record.name)
+                let isUpdateSuccess = (self.fooddata == nil) ? Coredata.shared.createNewRecords(record: record) : Coredata.shared.updateRecord(predicate: predicate, updateValues: record)
+                if isUpdateSuccess { //Create new record
+                    self.isEditMode = false
+                    self.detailTableView.reloadData()
+                    isReloadListTable = true
                 }
             } else {
                 let alert = UIAlertController(title: "Notification", message: verifyResult.message, preferredStyle: .alert)

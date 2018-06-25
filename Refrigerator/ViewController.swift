@@ -19,8 +19,6 @@ class ViewController: UIViewController {
         }
     }
     
-    var isNeedtoReloadTable = false
-    
     //Funcs
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,9 +34,9 @@ class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        if isNeedtoReloadTable {
+        if isReloadListTable {
             foodListTableView.reloadData()
-            isNeedtoReloadTable = false
+            isReloadListTable = false
         }
     }
 

@@ -47,19 +47,13 @@ class Coredata {
         let recordEntity = NSEntityDescription.entity(forEntityName: "Record", in: context)!
         let recordObj = NSManagedObject(entity: recordEntity, insertInto: context)
         let id = (recordCount <= 0) ? 1 : recordCount
+        
         recordObj.setValue(id, forKey: "id")
         recordObj.setValue(record.name, forKey: "name")
         recordObj.setValue(record.classified, forKey: "classified")
         recordObj.setValue(record.quantity, forKey: "quantity")
         recordObj.setValue(record.validdate, forKey: "validdate")
         recordObj.setValue(record.image, forKey: "image")
-//        recordObj.setValuesForKeys(["id": (recordCount <= 0 ? 1 : recordCount),
-//                                    "name": record.name as Any,
-//                                    "classified": record.classified as Any,
-//                                    "quantity": record.quantity as Any,
-//                                    "vaildDate": record.validdate as Any,
-//                                    "image": record.image as Any])
-
         return saveContext()
     }
     func createNewClassified(classified: ClassifiedData) -> Bool {
@@ -88,6 +82,10 @@ class Coredata {
         }
         return result
     }
+    func readOneRecord(predicate: NSPredicate?, sortBy: [NSSortDescriptor]?) -> Record? {
+        let records = readRecord(fetchLimit: 1, predicate: predicate, sortBy: sortBy)
+        return ((records.count == 1) ? records[0] : nil)
+    }
     func readClassified(fetchLimit: Int?, predicate: NSPredicate?, sortBy: [NSSortDescriptor]?) -> [Classified] {
         var result = [Classified]()
         let request = NSFetchRequest<Classified>(entityName: "Classified")
@@ -106,17 +104,19 @@ class Coredata {
     }
 
     //MARK: - Update
-    func updateRecords(predicate: NSPredicate, updateValues: [String: Any]) -> Bool {
-        let objects = readRecord(fetchLimit: 1, predicate: predicate, sortBy: nil)
-        if objects.count > 0 {
-            for object in objects {
-                for updateValue in updateValues {
-                    object.setValue(updateValue.value, forKey: updateValue.key)
-                }
-            }
+    func updateRecord(predicate: NSPredicate, updateValues: RecordData) -> Bool {
+        let record = readOneRecord(predicate: predicate, sortBy: nil)
+        if record != nil {
+            record!.setValue(updateValues.name, forKey: "name")
+            record!.setValue(updateValues.classified, forKey: "classified")
+            record!.setValue(updateValues.quantity, forKey: "quantity")
+            record!.setValue(updateValues.validdate, forKey: "validdate")
+            record!.setValue(updateValues.image, forKey: "image")
             return saveContext()
+        } else {
+            print("There is not exist this data.")
+            return false
         }
-        return true
     }
     func updateClassified(predicate: NSPredicate, updateValues: [String: Any]) -> Bool {
         let objects = readClassified(fetchLimit: 1, predicate: predicate, sortBy: nil)

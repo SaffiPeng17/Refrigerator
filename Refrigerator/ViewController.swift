@@ -13,7 +13,38 @@ var selectedIdx = 0
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var foodListTableView: UITableView!
+    @IBOutlet weak var foodListTableView: UITableView! {
+        didSet {
+            //Update ClassifiedArray
+            var array = ClassifiedDefault.strArray
+            let cusClassifieds = Coredata.shared.readClassified(fetchLimit: nil, predicate: nil, sortBy: nil)
+            if cusClassifieds.count > 0 {
+                for cusClassified in cusClassifieds {
+                    array.append(cusClassified.name!)
+                }
+            }
+            classifiedArray = array
+            //Update FoodDict
+            var dict = [String: [Record]]()
+            let records = Coredata.shared.readRecord(fetchLimit: nil, predicate: nil, sortBy: nil)
+            if records.count > 0 {
+                for classified in classifiedArray {
+                    var array = [Record]()
+                    for record in records {
+                        if classified == record.classified {
+                            array.append(record)
+                        }
+                    }
+                    dict.updateValue(array, forKey: classified)
+                }
+            } else {
+                for classified in classifiedArray {
+                    dict.updateValue([Record](), forKey: classified)
+                }
+            }
+            foodDict = dict
+        }
+    }
     
     //Funcs
     override func viewDidLoad() {
@@ -36,11 +67,7 @@ class ViewController: UIViewController {
                 let key = classifiedArray[idxPath.section]
                 let data = (foodDict.count > 0) ? foodDict[key]![idxPath.row] : nil
 
-                destController.fooddata?.name = (data!.name)!
-                destController.fooddata?.quantity = Int(data!.quantity)
-                destController.fooddata?.validdate = (data!.validdate)!
-                destController.fooddata?.classified = (data!.classified)!
-                destController.fooddata?.image = (data!.image)!
+                destController.fooddata = data
                 destController.attribureEditMode = false
             }
         } else if segue.identifier == "showAddDetail" {
@@ -55,23 +82,17 @@ class ViewController: UIViewController {
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     //SETUP: How many sections in Table?
     func numberOfSections(in tableView: UITableView) -> Int {
-//        print("numberOfSections")
         return classifiedArray.count
     }
     //SETUP: What is the header of every sections?
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        print("titleForHeaderInSection")
-//        print("foodDict.count = \(String(describing: foodDict.count))")
         guard (foodDict.count) > 0 else {
-//            print("nil")
             return nil
         }
-//        print("not nil")
         return Array(foodDict.keys)[section]
     }
     //SETUP: How many rows in every section?
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        print("numberOfRowsInSection")
         guard foodDict.count > 0 else {
             return 0
         }
@@ -79,7 +100,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     //SETUP: The view of every cell.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        print("cellForRowAt")
         let cell = tableView.dequeueReusableCell(withIdentifier: "listcell", for: indexPath) as! ListViewCell
         if foodDict.count > 0 {
             let key = classifiedArray[indexPath.section]
@@ -95,12 +115,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     //SETUP: Can the rows be edited?
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-//        print("canEditRowAt")
         return true
     }
     //SETUP: Define the type of Edit.
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-//        print("editingStyle")
         if editingStyle == .delete {
             let key = classifiedArray[indexPath.section]
             let data = foodDict[key]![indexPath.row]
@@ -115,40 +133,4 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             present(alert, animated: true)
         }
     }
-    
-//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//            foods.remove(at: indexPath.row)
-//            foodSelect.remove(at: indexPath.row)
-//        }
-//        tableView.deleteRows(at: [indexPath], with: .fade)
-//    }
-//
-//    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-//        let share = UITableViewRowAction(style: .default, title: "Share") { (action, indexPath) in
-//            if let shareImage = UIImage(named: foods[indexPath.row].pic) {
-//                let shareText = foods[indexPath.row].name
-//                let activityCtrler = UIActivityViewController(activityItems: [shareText, shareImage], applicationActivities: nil)
-//                self.present(activityCtrler, animated: true, completion: nil)
-//            }
-//        }
-//        share.backgroundColor = UIColor(red: 26/255, green: 27/255, blue: 65/255, alpha: 1)
-//
-//        let delete = UITableViewRowAction(style: .default, title: "Delete") { (action, indexPath) in
-//            let alert = UIAlertController(title: "Confirm", message: "Are you sure to delete?", preferredStyle: .alert)
-//            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-//            alert.addAction(cancelAction)
-//            let okAction = UIAlertAction(title: "OK", style: .default) { (action: UIAlertAction) in
-//                foods.remove(at: indexPath.row)
-//                foodSelect.remove(at: indexPath.row)
-//                tableView.deleteRows(at: [indexPath], with: .fade)
-//            }
-//            alert.addAction(okAction)
-//            self.present(alert, animated: true, completion: nil)
-//
-//        }
-//        delete.backgroundColor = UIColor(red: 192/255, green: 132/255, blue: 151/255, alpha: 1)
-//
-//        return [share, delete]
-//    }
 }

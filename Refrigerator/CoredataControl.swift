@@ -10,15 +10,15 @@ import UIKit
 import CoreData
 
 
-class RecordObj {
+class RecordData {
     var name: String = ""
-    var quantity: Int = 0
+    var quantity: Int16 = 0
     var validdate: String = ""
     var classified: String = ""
     var image: Data?
 }
 
-class ClassifiedObj {
+class ClassifiedData {
     var name: String = ""
 }
 
@@ -31,10 +31,8 @@ class Coredata {
 
     //MARK: - Common Function
     func saveContext() -> Bool {
-        print("saveContext")
         do {
             try context.save()
-            print("save success")
             return true
         } catch let error as NSError {
             print("Context Save Fail! \(error), \(error.userInfo)")
@@ -43,29 +41,37 @@ class Coredata {
     }
 
     //MARK: - Create
-    func createNewRecords(record: RecordObj) -> Bool {
-        print("createNewRecords")
+    func createNewRecords(record: RecordData) -> Bool {
         let recordCount = readRecord(fetchLimit: nil, predicate: nil, sortBy: nil).count
-        let enRecords = NSEntityDescription.entity(forEntityName: "Record", in: context)!
-        enRecords.setValuesForKeys(["id": (recordCount == 0 ? 1 : recordCount),
-                                    "name": record.name as Any,
-                                    "classified": record.classified as Any,
-                                    "quantity": record.quantity as Any,
-                                    "vaildDate": record.validdate as Any,
-                                    "image": record.image as Any])
+        let recordEntity = NSEntityDescription.entity(forEntityName: "Record", in: context)!
+        let recordObj = NSManagedObject(entity: recordEntity, insertInto: context)
+        let id = (recordCount <= 0) ? 1 : recordCount
+        recordObj.setValue(id, forKey: "id")
+        recordObj.setValue(record.name, forKey: "name")
+        recordObj.setValue(record.classified, forKey: "classified")
+        recordObj.setValue(record.quantity, forKey: "quantity")
+        recordObj.setValue(record.validdate, forKey: "validdate")
+        recordObj.setValue(record.image, forKey: "image")
+//        recordObj.setValuesForKeys(["id": (recordCount <= 0 ? 1 : recordCount),
+//                                    "name": record.name as Any,
+//                                    "classified": record.classified as Any,
+//                                    "quantity": record.quantity as Any,
+//                                    "vaildDate": record.validdate as Any,
+//                                    "image": record.image as Any])
+
         return saveContext()
     }
-    func createNewClassified(classified: ClassifiedObj) -> Bool {
+    func createNewClassified(classified: ClassifiedData) -> Bool {
         let classifiedCount = readClassified(fetchLimit: nil, predicate: nil, sortBy: nil).count
-        let enClassified = NSEntityDescription.entity(forEntityName: "Classified", in: context)!
-        enClassified.setValuesForKeys(["id": classifiedCount,
-                                       "name": classified.name as Any])
+        let classifiedEntity = NSEntityDescription.entity(forEntityName: "Classified", in: context)!
+        let classifiedObj = NSManagedObject(entity: classifiedEntity, insertInto: context)
+        classifiedObj.setValuesForKeys(["id": classifiedCount,
+                                        "name": classified.name as Any])
         return saveContext()
     }
 
     //MARK: - Read
     func readRecord(fetchLimit: Int?, predicate: NSPredicate?, sortBy: [NSSortDescriptor]?) -> [Record] {
-        print("readRecord")
         var result = [Record]()
         let request = NSFetchRequest<Record>(entityName: "Record")
         if fetchLimit != nil {
@@ -76,7 +82,6 @@ class Coredata {
 
         do {
             result = try context.fetch(request)
-            print("result = \(result)")
         } catch let error as NSError {
             print("Fetch Record data Fail! \(error), \(error.userInfo)")
         }

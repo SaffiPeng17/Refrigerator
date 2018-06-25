@@ -52,7 +52,7 @@ class ItemViewController: UIViewController {
     @IBOutlet weak var classifiedPicker: UIPickerView!
     @IBOutlet weak var doneButton: UIButton!
     
-    var fooddata: RecordObj?
+    var fooddata: Record?
     var cellSelectedIdx = 0
     var classifiedSelectedIdx = 0
     var titleArray = TableItemIdx.dispItems
@@ -146,9 +146,9 @@ class ItemViewController: UIViewController {
             foodImage.image = (fooddata != nil) ? UIImage(data: (fooddata?.image!)!) : nil
         case .tabledata:
             if fooddata != nil {
-                valueArray = [fooddata?.quantity as Any,
-                              fooddata?.validdate as Any,
-                              fooddata?.classified as Any]
+                valueArray = [Int(fooddata!.quantity),
+                              String(fooddata!.validdate!),
+                              String(fooddata!.classified!)]
             } else {
                 let formatter = DateFormatter()
                 formatter.dateFormat = "yyyy-MM-dd"
@@ -198,14 +198,18 @@ class ItemViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
             let verifyResult = self.verifyChanged()
             if verifyResult.result {
-                let record = RecordObj()
-                record.name = self.nameTextField.text!
-                record.quantity = Int(self.valueArray[TableItemIdx.quantity.rawValue] as! String)!
-                record.validdate = self.valueArray[TableItemIdx.vailddate.rawValue] as! String
-                record.classified = self.valueArray[TableItemIdx.classified.rawValue] as! String
-                record.image = UIImagePNGRepresentation(self.foodImage.image!)
-                if Coredata.shared.createNewRecords(record: record) {
-                    self.isEditMode = true
+                if self.fooddata == nil {
+                    let record = RecordData()
+                    record.name = self.nameTextField.text!
+                    record.quantity = Int16(self.valueArray[TableItemIdx.quantity.rawValue] as! String)!
+                    record.validdate = self.valueArray[TableItemIdx.vailddate.rawValue] as! String
+                    record.classified = self.valueArray[TableItemIdx.classified.rawValue] as! String
+                    record.image = UIImagePNGRepresentation(self.foodImage.image!)
+                    if Coredata.shared.createNewRecords(record: record) {
+                        self.isEditMode = true
+                    }
+                } else {
+                    //Update data
                 }
             } else {
                 let alert = UIAlertController(title: "Notification", message: verifyResult.message, preferredStyle: .alert)
@@ -213,10 +217,11 @@ class ItemViewController: UIViewController {
                 self.present(alert, animated: true)
             }
         }))
-        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: { _ in
+            self.isEditMode = false
+            self.detailTableView.reloadData()
+        }))
         present(alert, animated: true)
-
-        detailTableView.reloadData()
     }
 
     @IBAction func galleryButtonClicked(_ sender: Any) {

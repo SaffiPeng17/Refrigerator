@@ -163,7 +163,7 @@ class ItemViewController: UIViewController {
         var isVerifySuccess = true
         var message = ""
         //verify: Name
-        if nameTextField.text == nil {
+        if nameTextField.text == nil || nameTextField.text == "" {
             isVerifySuccess = false
             message = VerifyError.veNameEmpty.message
         } else {
@@ -204,8 +204,12 @@ class ItemViewController: UIViewController {
                 record.quantity = Int(self.valueArray[TableItemIdx.quantity.rawValue])!
                 record.validdate = self.valueArray[TableItemIdx.vailddate.rawValue]
                 record.classified = self.valueArray[TableItemIdx.classified.rawValue]
-                print("save image orientation = \(String(describing: self.foodImage.image?.imageOrientation.rawValue))")
-                record.image = UIImagePNGRepresentation(self.foodImage.image!)
+                if self.foodImage.image != nil {
+                    let tmpImage = UIImage(cgImage: self.foodImage.image!.cgImage!, scale: self.foodImage.image!.scale, orientation: .up)
+                    record.image = UIImagePNGRepresentation(tmpImage)
+                } else {
+                    record.image = nil
+                }
                 //Update Core Data
                 let predicate = NSPredicate(format: "name == %@", record.name)
                 let isUpdateSuccess = (self.fooddata == nil) ? Coredata.shared.createNewRecords(record: record) : Coredata.shared.updateRecord(predicate: predicate, updateValues: record)

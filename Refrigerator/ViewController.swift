@@ -91,7 +91,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             cell.fImage.image = UIImage(data: data.image!)
             cell.fQuantity.text = data.quantity.description
             cell.fPeriod.text = data.validdate
-    //        cell.accessoryType = foodSelect[indexPath.row] ? .checkmark : .none
         }
         return cell
     }

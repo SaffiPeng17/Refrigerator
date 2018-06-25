@@ -41,7 +41,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="THz-t5-kSk">
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="THz-t5-kSk">
                                                     <rect key="frame" x="21" y="13" width="339" height="56"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1tG-QF-YCS">
@@ -56,15 +56,15 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </imageView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="Tjg-rj-27J">
-                                                            <rect key="frame" x="70" y="0.0" width="269" height="56"/>
+                                                            <rect key="frame" x="78" y="0.0" width="261" height="56"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GVE-vq-SZL">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="269" height="21"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="261" height="21"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quantity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mu7-f1-oNZ">
-                                                                    <rect key="frame" x="0.0" y="22" width="269" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="22" width="261" height="17"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="17" id="bbC-6Y-f1U"/>
                                                                     </constraints>
@@ -73,7 +73,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Period" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sgn-1Q-9zk">
-                                                                    <rect key="frame" x="0.0" y="40" width="269" height="16"/>
+                                                                    <rect key="frame" x="0.0" y="40" width="261" height="16"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="16" id="oDj-iw-NV0"/>
                                                                     </constraints>

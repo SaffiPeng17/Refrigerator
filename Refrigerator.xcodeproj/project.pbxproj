@@ -147,7 +147,7 @@
 				TargetAttributes = {
 					04D6EC361F13D7FC003102DA = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = QD9KMW2AG9;
+						DevelopmentTeam = 9QU6SLZLG8;
 						LastSwiftMigration = 0940;
 						ProvisioningStyle = Automatic;
 					};
@@ -330,7 +330,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = QD9KMW2AG9;
+				DEVELOPMENT_TEAM = 9QU6SLZLG8;
 				INFOPLIST_FILE = Refrigerator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.freeland.Refrigerator;
@@ -344,7 +344,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = QD9KMW2AG9;
+				DEVELOPMENT_TEAM = 9QU6SLZLG8;
 				INFOPLIST_FILE = Refrigerator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.freeland.Refrigerator;

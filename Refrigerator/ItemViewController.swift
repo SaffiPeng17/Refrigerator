@@ -50,6 +50,7 @@ class ItemViewController: UIViewController {
     @IBOutlet weak var dialogTitle: UILabel!
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var classifiedPicker: UIPickerView!
+    @IBOutlet weak var classifiedTextField: UITextField!
     @IBOutlet weak var doneButton: UIButton!
     
     var fooddata: Record?
@@ -76,6 +77,7 @@ class ItemViewController: UIViewController {
         }
     }
     var viewShiftY: (name: CGFloat?, quantity: CGFloat?)
+    var isNewClassified = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -273,7 +275,14 @@ class ItemViewController: UIViewController {
             formatter.dateFormat = "yyyy-MM-dd"
             valueArray[cellSelectedIdx] = formatter.string(from: datePicker.date)
         case TableItemIdx.classified.rawValue:
-            valueArray[cellSelectedIdx] = classifiedArray[classifiedSelectedIdx]
+            if isNewClassified {
+                if classifiedTextField.text != nil || classifiedTextField.text != "" {
+                    let _ = Coredata.shared.createNewClassified(classified: classifiedTextField.text!)
+                    valueArray[cellSelectedIdx] = classifiedTextField.text!
+                }
+            } else {
+                valueArray[cellSelectedIdx] = classifiedArray[classifiedSelectedIdx]
+            }
         default:
             print("?? cellSelectedIdx = \(cellSelectedIdx)")
         }
@@ -301,6 +310,11 @@ extension ItemViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.title.text = titleArray[indexPath.row]
                 cell.content.text = valueArray[indexPath.row]
                 cell.content.textColor = UIColor.editBlue
+                if indexPath.row == TableItemIdx.classified.rawValue {
+                    cell.button.isHidden = false
+                    cell.button.isEnabled = true
+                    cell.delegate = self
+                }
                 return cell
             }
         } else {
@@ -308,6 +322,8 @@ extension ItemViewController: UITableViewDataSource, UITableViewDelegate {
             cell.title.text = titleArray[indexPath.row]
             cell.content.text = valueArray[indexPath.row]
             cell.content.textColor = UIColor.black
+            cell.button.isHidden = true
+            cell.button.isEnabled = false
             return cell
         }
     }
@@ -321,6 +337,8 @@ extension ItemViewController: UITableViewDataSource, UITableViewDelegate {
                 datePicker.isHidden = false
                 datePicker.isEnabled = true
                 classifiedPicker.isHidden = true
+                classifiedTextField.isHidden = true
+                classifiedTextField.isEnabled = false
                 
                 dialogTitle.text = "Pick A Date"
                 let formatter = DateFormatter()
@@ -329,10 +347,13 @@ extension ItemViewController: UITableViewDataSource, UITableViewDelegate {
                 datePicker.setDate(pickerDate, animated: true)
 
             case TableItemIdx.classified.rawValue:
+                isNewClassified = false
                 dialogSuperView.isHidden = false
                 datePicker.isHidden = true
                 datePicker.isEnabled = false
                 classifiedPicker.isHidden = false
+                classifiedTextField.isHidden = true
+                classifiedTextField.isEnabled = false
                 
                 dialogTitle.text = "Pick A Classified"
                 let currentClassified = valueArray[indexPath.row]
@@ -390,12 +411,27 @@ extension ItemViewController: UIPickerViewDataSource, UIPickerViewDelegate {
 extension ItemViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField != nameTextField {
-            valueArray[0] = textField.text!
+            valueArray[TableItemIdx.quantity.rawValue] = textField.text!
         }
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+}
+
+extension ItemViewController: ItemViewCellDelegate {
+    func buttonClicked() {
+        isNewClassified = true
+        dialogSuperView.isHidden = false
+        datePicker.isHidden = true
+        datePicker.isEnabled = false
+        classifiedPicker.isHidden = true
+        classifiedTextField.isHidden = false
+        classifiedTextField.isEnabled = true
+
+        dialogTitle.text = "Input New Classified"
+        cellSelectedIdx = TableItemIdx.classified.rawValue
     }
 }
 

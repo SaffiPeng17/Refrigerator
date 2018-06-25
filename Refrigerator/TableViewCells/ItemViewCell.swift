@@ -8,11 +8,19 @@
 
 import UIKit
 
+
+protocol ItemViewCellDelegate {
+    func buttonClicked()
+}
+
 class ItemViewCell: UITableViewCell {
 
     @IBOutlet var title: UILabel!
     @IBOutlet var content: UILabel!
+    @IBOutlet var button: UIButton!
     
+    var delegate: ItemViewCellDelegate?
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -24,4 +32,7 @@ class ItemViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    @IBAction func buttonClicked(_ sender: Any) {
+        delegate?.buttonClicked()
+    }
 }

@@ -18,10 +18,6 @@ class RecordData {
     var image: Data?
 }
 
-class ClassifiedData {
-    var name: String = ""
-}
-
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
 let context = appDelegate.persistentContainer.viewContext
 
@@ -56,12 +52,14 @@ class Coredata {
         recordObj.setValue(record.image, forKey: "image")
         return saveContext()
     }
-    func createNewClassified(classified: ClassifiedData) -> Bool {
+    func createNewClassified(classified: String) -> Bool {
         let classifiedCount = readClassified(fetchLimit: nil, predicate: nil, sortBy: nil).count
         let classifiedEntity = NSEntityDescription.entity(forEntityName: "Classified", in: context)!
         let classifiedObj = NSManagedObject(entity: classifiedEntity, insertInto: context)
-        classifiedObj.setValuesForKeys(["id": classifiedCount,
-                                        "name": classified.name as Any])
+        let id = (classifiedCount <= 0) ? 1 : classifiedCount
+
+        classifiedObj.setValue(id, forKey: "id")
+        classifiedObj.setValue(classified, forKey: "name")
         return saveContext()
     }
 

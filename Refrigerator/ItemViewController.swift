@@ -129,7 +129,7 @@ class ItemViewController: UIViewController {
             }
         } else {
             keyboardY = keyboardY-30
-            textFieldLowestPoint = detailTableView.frame.origin.y+50
+            textFieldLowestPoint = detailTableView.frame.origin.y+30
             if textFieldLowestPoint > keyboardY {
                 if viewShiftY.quantity == nil {
                     view.frame.origin.y = view.frame.origin.y-abs(textFieldLowestPoint-keyboardY)
@@ -314,6 +314,9 @@ extension ItemViewController: UITableViewDataSource, UITableViewDelegate {
                     cell.button.isHidden = false
                     cell.button.isEnabled = true
                     cell.delegate = self
+                } else {
+                    cell.button.isHidden = true
+                    cell.button.isEnabled = false
                 }
                 return cell
             }
